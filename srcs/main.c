@@ -1,0 +1,5 @@
+//HEADER
+
+int	main(void)
+{
+}
