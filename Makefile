@@ -19,21 +19,24 @@ SRCDIR			:= srcs
 
 SRC			:= main.c
 
-INCL	:= -I includes/ -I libft/includes
+INCL	:= -I includes/ -I libft/includes/ -I libterm/includes/
 
-LIBS		:= -L libft -lft
-LIBTERM		:= -L libterm -lterm
+LIBS		:= -L libft -lft -L libterm -lterm
+LIBTERM		:= -L libterm -lterm -ltermcap
 SRCS		:= $(addprefix $(SRCDIR)/, $(SRC))
 
 OBJS	:= $(SRCS:.c=.o)
 DEPS	:= includes/ft_select.h Makefile
 
-COMP	:= $(CC) $(WFLAGS) $(INCL) $(LIBS)
+COMP	:= $(CC) $(WFLAGS) $(INCL) $(LIBS) $(LIBTERM)
 
 all: $(NAME)
 
 libft/libft.a:
 	$(MAKE) -C libft -j
+
+libterm/libterm.a:
+	$(MAKE) -C libterm -j
 
 d: all
 	@./$(NAME)
@@ -46,7 +49,7 @@ fsa:
 	@$(COMP) -o $(NAME) $(SRCS) -fsanitize=address -g3
 	@./$(NAME)
 
-$(NAME): $(OBJS) libft/libft.a Makefile
+$(NAME): $(OBJS) libft/libft.a libterm/libterm.a Makefile
 	$(COMP) -o $(NAME) $(SRCS)
 
 %.o: %.c $(DEPS)

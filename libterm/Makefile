@@ -18,13 +18,14 @@ SRCDIR		:= srcs
 INCLDIR		:= includes
 
 LIBDIR	:= ../libft
-LIBS	:= -L $(LIBDIR) -lft
+LIBS	:= -L $(LIBDIR) -lft -ltermcap
 CFLAGS	:= -Wall -Werror -I $(INCLDIR) -I $(LIBDIR)/includes
-SRC		:= termcapstr.c
+SRC		:= termcap_str.c termcap_init.c \
+	errors/error_attr.c errors/error_tgetent.c errors/error_getenv.c errors/error_getstr.c
 
 SRCS	:= $(addprefix $(SRCDIR)/, $(SRC))
 OBJS	:= $(SRCS:.c=.o)
-DEPS	:= Makefile $(INCLDIR)/ft_termcap.h ../libft/libft.a
+DEPS	:= Makefile $(INCLDIR)/libterm.h ../libft/libft.a
 NAME	:= libterm.a
 
 all: $(NAME)

@@ -1,6 +1,6 @@
 while true
 do
-	leaks minishell
+	leaks select
 	sleep 2
 	clear
 done

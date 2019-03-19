@@ -1,8 +1,8 @@
-#include "ft_select.h"
+#include "libterm.h"
 
 int	main(void)
 {
-	struct termios	saved_attr;
+	struct termios saved_attr;
 
 	if (setup_terminal(&saved_attr) == 0)
 		return (1);
@@ -12,5 +12,4 @@ int	main(void)
 		reset_terminal(&saved_attr);
 		return (0);
 	}
-	return (1);
 }

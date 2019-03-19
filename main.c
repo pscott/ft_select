@@ -8,9 +8,11 @@ int	main(void)
 		return (1);
 	else
 	{
-		execute_termcap(CLEAR, &saved_attr);
-		reset_terminal(&saved_attr);
-		return (0);
+		if (execute_termcap(CLEAR, &saved_attr))
+		{
+			reset_terminal(&saved_attr);
+			return (0);
+		}
+		return (1);
 	}
-	return (1);
 }
