@@ -17,38 +17,41 @@ NAME		:= ft_select
 
 SRCDIR		:= srcs
 
-SRC			:= main.c
+SRC			:= main.c linked_list.c free.c
+ERR			:= error_usage.c
 
 INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/
 
 LIBS		:= -L libft -lft -L libterm -lterm -ltermcap
-SRCS		:= $(addprefix $(SRCDIR)/, $(SRC))
+ERRS		:= $(addprefix $(SRCDIR)/errors/, $(ERR))
+SRCS		:= $(addprefix $(SRCDIR)/, $(SRC)) $(ERRS)
 
 OBJS		:= $(SRCS:.c=.o)
 DEPS		:= includes/ft_select.h Makefile
 
 COMP		:= $(CC) $(WFLAGS) $(INCL) $(LIBS)
+OPT			:= salut comment ca va
 
 all: $(NAME)
 
-libft/libft.a:
-	$(MAKE) -C libft -j
+libft:
+	@$(MAKE) -C libft -j
 
-libterm/libterm.a:
-	$(MAKE) -C libterm -j
+libterm:
+	@$(MAKE) -C libterm -j
 
 d: all
-	@./$(NAME)
+	@./$(NAME) $(OPT)
 
 val: all
 	@$(COMP) -o $(NAME) $(SRCS) -g
-	valgrind --leak-check=full ./$(NAME)
+	valgrind --leak-check=full ./$(NAME) $(OPT)
 
 fsa:
 	@$(COMP) -o $(NAME) $(SRCS) -fsanitize=address -g3
-	@./$(NAME)
+	@./$(NAME) $(OPT)
 
-$(NAME): $(OBJS) libft/libft.a libterm/libterm.a Makefile
+$(NAME): $(OBJS) libft libterm Makefile
 	$(COMP) -o $(NAME) $(SRCS)
 
 %.o: %.c $(DEPS)
@@ -68,4 +71,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re d fsa val
+.PHONY: all clean fclean re d fsa val libterm libft

@@ -1,6 +1,6 @@
 while true
 do
-	leaks select
+	leaks ft_select
 	sleep 2
 	clear
 done
