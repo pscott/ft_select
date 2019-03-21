@@ -16,15 +16,19 @@ RM		:= rm -rf
 
 SRCDIR		:= srcs
 INCLDIR		:= includes
+ERRDIR		:= $(SRCDIR)/errors
+LIBDIR		:= ../libft
 
-LIBDIR	:= ../libft
 LIBS	:= -L $(LIBDIR) -lft -ltermcap
 CFLAGS	:= -Wall -Werror -I $(INCLDIR) -I $(LIBDIR)/includes
-SRC		:= termcap_str.c termcap_init.c \
-	errors/error_attr.c errors/error_tgetent.c errors/error_getenv.c errors/error_getstr.c
+SRC		:= execute_cap.c termcap_settings.c
+ERR		:= error_attr.c error_tgetent.c error_getenv.c error_getstr.c \
+	error_isatty.c
 
+ERRS	:= $(addprefix $(ERRDIR)/, $(ERR))
 SRCS	:= $(addprefix $(SRCDIR)/, $(SRC))
-OBJS	:= $(SRCS:.c=.o)
+SOURCE	:= $(SRCS) $(ERRS)
+OBJS	:= $(SOURCE:.c=.o)
 DEPS	:= Makefile $(INCLDIR)/libterm.h ../libft/libft.a
 NAME	:= libterm.a
 

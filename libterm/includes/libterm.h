@@ -17,13 +17,15 @@ typedef struct	s_pos {
 
 int				setup_terminal(struct termios *saved_att);
 int				reset_terminal(struct termios *saved_att);
-int				execute_termcap(char *cap, struct termios *saved_attr);
+int				execute_str(char *cap, struct termios *saved_attr);
 
 int				err_setattr(void);
 int				err_getattr(void);
 int				err_noentry(void);
 int				err_no_database(void);
 int				err_no_env(void);
+int				err_no_env(void);
 int				err_no_str(char *cap);
+int				err_not_terminal(void);
 
 #endif
