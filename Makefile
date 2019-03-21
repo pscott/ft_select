@@ -10,25 +10,24 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC		:= gcc
-WFLAGS	:= -Wall -Wextra
-RM		:= rm -rf
-NAME	:= ft_select
+CC			:= gcc
+WFLAGS		:= -Wall -Wextra
+RM			:= rm -rf
+NAME		:= ft_select
 
-SRCDIR			:= srcs
+SRCDIR		:= srcs
 
 SRC			:= main.c
 
-INCL	:= -I includes/ -I libft/includes/ -I libterm/includes/
+INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/
 
-LIBS		:= -L libft -lft -L libterm -lterm
-LIBTERM		:= -L libterm -lterm -ltermcap
+LIBS		:= -L libft -lft -L libterm -lterm -ltermcap
 SRCS		:= $(addprefix $(SRCDIR)/, $(SRC))
 
-OBJS	:= $(SRCS:.c=.o)
-DEPS	:= includes/ft_select.h Makefile
+OBJS		:= $(SRCS:.c=.o)
+DEPS		:= includes/ft_select.h Makefile
 
-COMP	:= $(CC) $(WFLAGS) $(INCL) $(LIBS) $(LIBTERM)
+COMP		:= $(CC) $(WFLAGS) $(INCL) $(LIBS)
 
 all: $(NAME)
 
@@ -56,14 +55,14 @@ $(NAME): $(OBJS) libft/libft.a libterm/libterm.a Makefile
 	$(CC) -o $@ -c $< $(WFLAGS) $(INCL)
 
 clean:
-	@make clean -C libft
-	@make clean -C libterm
+	@$(MAKE) clean -C libft
+	@$(MAKE) clean -C libterm
 	@$(RM) *dSYM*
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@make fclean -C libft
-	@make fclean -C libterm
+	@$(MAKE) fclean -C libft
+	@$(MAKE) fclean -C libterm
 	@$(RM) $(NAME)
 	@$(RM) a.out
 
