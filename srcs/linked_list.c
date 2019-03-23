@@ -1,17 +1,17 @@
 #include "ft_select.h"
 
-void		print_arg_list(t_list_addr *addr)
+void		print_list(t_arg_list *lst)
 {
 	t_arg_list	*tmp;
 
 	ft_printf("\n");
-	if (!(tmp = addr->head))
+	if (!(tmp = lst))
 	{
 		ft_putstr_fd("error: arg_list is empty\n", 2);
 		return ;
 	}
 	ft_printf("%-10s", tmp->name);
-	while ((tmp = tmp->next) && (tmp != addr->head))
+	while ((tmp = tmp->next) && (tmp != lst))
 		ft_printf("%-10s", tmp->name);
 	ft_printf("\n");
 }
@@ -27,40 +27,40 @@ t_arg_list	*create_node(char *name)
 	if (!(res->name = ft_strdup(name)))
 		return (NULL);
 	res->len = ft_strlen(name);
-	res->next = NULL;
-	res->prev = NULL;
+	res->next = res;
+	res->prev = res;
 	return (res);
 }
 
-void		add_node(t_arg_list *new, t_list_addr *addr)
+t_arg_list	*add_node(t_arg_list *new, t_arg_list **lst)
 {
 	t_arg_list	*tail;
+	t_arg_list	*head;
 
-	if (!addr || !(addr->tail) || !(addr->head))
-	{
-		ft_putstr_fd("error with addr tail or head\n", 2);
-		return ;
-	}
-	tail = addr->tail;
-	tail->next = new;
+	if (!lst)
+		return (NULL);
+	if (!*lst)
+		return (new);
+	head = (*lst);
+	tail = head->prev;
 	new->prev = tail;
-	new->next = addr->head;
-	addr->tail = new;
+	new->next = head;
+	tail->next = new;
+	head->prev = new;
+	return (head);
 }
 
-t_arg_list	*create_list(char **av, t_list_addr *addr)
+
+t_arg_list	*create_list(char **av)
 {
 	t_arg_list *lst;
 
 	if (!av || !(*av))
 		return (NULL);
-	lst = create_node(*av);
-	addr->head = lst;
-	addr->tail = lst;
-	av++;
+	lst = NULL;
 	while (*av)
 	{
-		add_node(create_node(*av), addr);
+		lst = add_node(create_node(*av), &lst);
 		av++;
 	}
 	return (lst);

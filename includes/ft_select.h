@@ -11,15 +11,10 @@ typedef struct	s_arg_list {
 	struct s_arg_list	*prev;
 }				t_arg_list;
 
-typedef struct	s_list_addr {
-	struct s_arg_list	*head;
-	struct s_arg_list	*tail;
-}				t_list_addr;
+t_arg_list	*create_list(char **av);
+void		print_list(t_arg_list *list);
 
-t_arg_list	*create_list(char **av, t_list_addr *addr);
-void		print_arg_list(t_list_addr *addr);
-
-void		free_list(t_list_addr *addr);
+void		free_list(t_arg_list *list);
 
 int			err_usage(void);
 

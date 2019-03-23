@@ -1,24 +1,12 @@
 #include "ft_select.h"
 
-t_list_addr	*create_addr(void)
-{
-	t_list_addr *res; 
-	if (!(res = (t_list_addr*)malloc(sizeof(*res))))
-		return (NULL);
-	res->head = NULL;
-	res->tail = NULL;
-	return (res);
-}
-
 int		ft_select(char **av)
 {
 	t_arg_list	*lst;
-	t_list_addr	*addr;
 
-	addr = create_addr();
-	lst = create_list(av, addr);
-	print_arg_list(addr);
-	free_list(addr);
+	lst = create_list(av);
+	print_list(lst);
+	free_list(lst);
 	return (1);
 }
 
