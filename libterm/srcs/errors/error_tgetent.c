@@ -8,6 +8,6 @@ int		err_noentry(void)
 
 int		err_no_database(void)
 {
-	ft_putstr_fd("error: no databse found\n", 2);
+	ft_putstr_fd("error: no database found\n", 2);
 	return (0);
 }

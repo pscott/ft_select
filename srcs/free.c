@@ -12,7 +12,7 @@ void		free_list(t_list_addr *addr)
 	t_arg_list *tmp;
 
 	lst = addr->head;
-	while (lst->next != addr->head)
+	while (lst && (lst->next != addr->head))
 	{
 		tmp = lst;
 		lst = lst->next;

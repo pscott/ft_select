@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 18:25:41 by pscott            #+#    #+#              #
-#    Updated: 2019/02/11 16:28:23 by pscott           ###   ########.fr        #
+#    Updated: 2019/03/22 18:27:10 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ OBJS		:= $(SRCS:.c=.o)
 DEPS		:= includes/ft_select.h Makefile
 
 COMP		:= $(CC) $(WFLAGS) $(INCL) $(LIBS)
-OPT			:= salut comment ca va
+ENV			:= env
+OPT			:= ew
 
 all: $(NAME)
 
@@ -41,15 +42,15 @@ libterm:
 	@$(MAKE) -C libterm -j
 
 d: all
-	@./$(NAME) $(OPT)
+	@$(ENV) ./$(NAME) $(OPT)
 
 val: all
 	@$(COMP) -o $(NAME) $(SRCS) -g
-	valgrind --leak-check=full ./$(NAME) $(OPT)
+	valgrind --leak-check=full $(ENV) ./$(NAME) $(OPT)
 
 fsa:
 	@$(COMP) -o $(NAME) $(SRCS) -fsanitize=address -g3
-	@./$(NAME) $(OPT)
+	@$(ENV) ./$(NAME) $(OPT)
 
 $(NAME): $(OBJS) libft libterm Makefile
 	$(COMP) -o $(NAME) $(SRCS)

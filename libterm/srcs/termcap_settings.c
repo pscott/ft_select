@@ -18,7 +18,7 @@ int			setup_terminal(struct termios *saved_attributes)
 		return (err_no_env());
 	if (isatty(0) == 0)
 		return (err_not_terminal());
-	if ((res = tgetent(term_buffer, termtype) == 0))
+	if ((res = tgetent(term_buffer, termtype)) == 0)
 		return (err_noentry());
 	else if (res == -1)
 		return (err_no_database());

@@ -19,7 +19,6 @@ int		ft_select(char **av)
 	lst = create_list(av, addr);
 	print_arg_list(addr);
 	free_list(addr);
-	//free addr and free lst
 	return (1);
 }
 
@@ -36,9 +35,6 @@ int	main(int ac, char **av)
 		av++;
 		ft_select(av);
 		reset_terminal(&saved_attr);
-		while (42)
-		{
-		}
 		return (0);
 	}
 	return (1);
