@@ -12,7 +12,6 @@ static t_arg_list	*create_node(char *name)
 		return (NULL);
 	res->len = ft_strlen(name);
 	res->current = 0;
-	res->deleted = 0;
 	res->highlighted = 0;
 	res-> prev = 0;
 	res->next = res;
@@ -54,6 +53,15 @@ t_arg_list			*create_list(char **av)
 	}
 	lst_addr(&lst);
 	return (lst);
+}
+
+t_print_info	*info_addr(t_print_info **new)
+{
+	static t_print_info	*info = NULL;
+
+	if (new)
+		info = *new;
+	return (info);
 }
 
 /*

@@ -11,13 +11,15 @@ static void		magic_print(char *buf)
 
 static int		ft_select(char **av)
 {
-	t_arg_list	*lst;
-	char		buf[BUF_SIZE + 1];
-	int			ret;
+	t_arg_list		*lst;
+	char			buf[BUF_SIZE + 1];
+	int				ret;
+	t_print_info	info;
 
 	lst = create_list(av);
 	lst->current = 1;
-	print_list(lst);
+	get_print_info(lst, &info);
+	print_list(lst, &info);
 	while ((ret = read(STDIN, buf, BUF_SIZE) > 0))
 	{
 		buf[BUF_SIZE] = 0;
@@ -26,7 +28,7 @@ static int		ft_select(char **av)
 		else if (ft_strncmp(buf, "\r", 1) == 0)
 			print_line();
 		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
-			ft_printf("right");
+			move_right(lst, &info, "right");
 		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
 			ft_printf("left");
 		else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0)

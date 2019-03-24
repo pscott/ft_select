@@ -20,8 +20,13 @@ static void	sigint_handler(int signo)
 
 static void	sigwinch_handler(int signo)
 {
+	t_print_info	*info;
+	t_arg_list		*lst;
 
-	print_list(lst_addr(NULL));
+	info = info_addr(NULL);
+	lst = lst_addr(NULL);
+	get_print_info(lst, info);
+	print_list(lst, info);
 	(void)signo;
 }
 

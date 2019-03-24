@@ -13,7 +13,6 @@ typedef struct	s_arg_list {
 	struct s_arg_list	*prev;
 	char				current;
 	char				highlighted;
-	char				deleted;
 }				t_arg_list;
 
 typedef struct	s_print_info {
@@ -22,12 +21,15 @@ typedef struct	s_print_info {
 	int				nb_chars;
 	int				nb_lines;
 	int				elem_per_line;
+	int				print_width;
 	struct winsize	w;
 }				t_print_info;
 
 t_arg_list		*create_list(char **av);
-void			print_list(t_arg_list *lst);
-t_arg_list		*lst_addr(t_arg_list **new);
+void			print_list(t_arg_list *lst, t_print_info *info);
+t_arg_list		*lst_addr(t_arg_list **lst);
+t_print_info	*info_addr(t_print_info **info);
+
 
 void			free_list(t_arg_list *lst);
 void			free_node(t_arg_list *lst);
@@ -35,5 +37,8 @@ void			free_node(t_arg_list *lst);
 int				err_usage(void);
 
 void			signal_setup(void);
+int				get_print_info(t_arg_list *lst, t_print_info *info);
+
+int				move_right(t_arg_list *lst, t_print_info *info, char *direction);
 
 #endif
