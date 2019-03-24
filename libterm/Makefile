@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 10:29:04 by pscott            #+#    #+#              #
-#    Updated: 2019/01/27 12:02:30 by pscott           ###   ########.fr        #
+#    Updated: 2019/03/24 18:18:47 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LIBDIR		:= ../libft
 
 LIBS	:= -L $(LIBDIR) -lft -ltermcap
 CFLAGS	:= -Wall -Werror -I $(INCLDIR) -I $(LIBDIR)/includes
-SRC		:= execute_cap.c termcap_settings.c
+SRC		:= execute_cap.c termcap_settings.c print_line.c
 ERR		:= error_attr.c error_tgetent.c error_getenv.c error_getstr.c \
 	error_isatty.c
 

@@ -9,7 +9,7 @@ int		execute_str(char *cap)
 	ap = buf;
 	if (cap && (cap_str = tgetstr(cap, &ap)))
 	{
-		write(1, buf, ft_strlen(cap_str)); //tputs ?
+		write(STDOUT, buf, ft_strlen(cap_str)); //tputs ?
 		return (1);
 	}
 	else

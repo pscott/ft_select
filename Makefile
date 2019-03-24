@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 18:25:41 by pscott            #+#    #+#              #
-#    Updated: 2019/03/24 01:51:56 by pscott           ###   ########.fr        #
+#    Updated: 2019/03/24 17:42:22 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME		:= ft_select
 
 SRCDIR		:= srcs
 
-SRC			:= main.c linked_list.c free.c signals.c
+SRC			:= main.c linked_list.c free.c signals.c printing.c
 ERR			:= error_usage.c
 
 INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/
@@ -31,7 +31,7 @@ DEPS		:= includes/ft_select.h Makefile
 
 COMP		:= $(CC) $(WFLAGS) $(INCL) $(LIBS)
 ENV			:= env
-OPT			:= ew
+OPT			:= 123 4567 8901011 abc defgghh
 
 all: $(NAME)
 

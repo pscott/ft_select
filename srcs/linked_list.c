@@ -1,21 +1,5 @@
 #include "ft_select.h"
 
-void				print_list(t_arg_list *lst)
-{
-	t_arg_list	*tmp;
-
-	ft_printf("\n");
-	if (!(tmp = lst))
-	{
-		ft_putstr_fd("error: arg_list is empty\n", 2);
-		return ;
-	}
-	ft_printf("%-10s", tmp->name);
-	while ((tmp = tmp->next) && (tmp != lst))
-		ft_printf("%-10s", tmp->name);
-	ft_printf("\n");
-}
-
 static t_arg_list	*create_node(char *name)
 {
 	t_arg_list *res;
@@ -27,6 +11,10 @@ static t_arg_list	*create_node(char *name)
 	if (!(res->name = ft_strdup(name)))
 		return (NULL);
 	res->len = ft_strlen(name);
+	res->current = 0;
+	res->deleted = 0;
+	res->highlighted = 0;
+	res-> prev = 0;
 	res->next = res;
 	res->prev = res;
 	return (res);
@@ -64,20 +52,22 @@ t_arg_list			*create_list(char **av)
 		lst = add_node(create_node(*av), &lst);
 		av++;
 	}
+	lst_addr(&lst);
 	return (lst);
 }
 
-t_arg_list			*delete_node(t_arg_list **node)
-{
-	t_arg_list	*prev;
-	t_arg_list	*next;
+/*
+** This function replaces a global variable.
+** Global are fobidden at 42 (except for g_saved_attr)
+** Call get_lst(NULL) to retrieve the current list address,
+** or call get_lst(&lst) to set the static variable to lst's address.
+*/
 
-	if (!node || !*node)
-		return (NULL);
-	prev = (*node)->prev;
-	next = (*node)->next;
-	prev->next = next;
-	next->prev = prev;
-	free_node(*node);
-	return (next);
+t_arg_list			*lst_addr(t_arg_list **new)
+{
+	static t_arg_list *lst = NULL;
+
+	if (new)
+		lst = *new;
+	return (lst);
 }

@@ -1,6 +1,5 @@
+#include "ft_select.h"
 #include <signal.h>
-#include <unistd.h>
-#include "libterm.h"
 
 /*
 ** Handler function for terminating (ie dangerous) signals
@@ -16,13 +15,14 @@ static void	sig_handler(int signo)
 static void	sigint_handler(int signo)
 {
 	(void)signo;
-	write(1, "\n", 1);
+	ft_putstr_fd("\n", STDOUT);
 }
 
 static void	sigwinch_handler(int signo)
 {
+
+	print_list(lst_addr(NULL));
 	(void)signo;
-	write(1, "Windows changed\n", ft_strlen("Windows changed\n"));
 }
 
 /*

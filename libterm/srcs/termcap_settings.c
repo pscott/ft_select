@@ -2,10 +2,12 @@
 
 int			reset_terminal_settings(void)
 {
-	write(1, "Reset\n", 6);
+	if (isatty(0) == 0)
+		return (0);
 	if ((tcsetattr(0, TCSANOW, &g_saved_attr) == -1))
 		return (err_resetattr());
-	return (0);
+	print_line();
+	return (1);
 }
 
 int		set_non_canonical_mode(struct termios *tattr)
@@ -18,8 +20,8 @@ int		set_non_canonical_mode(struct termios *tattr)
 	tattr->c_cflag |= CS8;
 	tattr->c_cc[VMIN] = 1;
 	tattr->c_cc[VTIME] = 0;
-	tcsetattr(0, TCSAFLUSH, tattr);
-	return (0);
+	tcsetattr(STDIN, TCSAFLUSH, tattr);
+	return (1);
 }
 
 int			setup_terminal_settings(void)
@@ -37,9 +39,9 @@ int			setup_terminal_settings(void)
 		return (err_noentry());
 	else if (res == -1)
 		return (err_no_database());
-	if ((tcgetattr(0, &g_saved_attr) == -1))
+	if ((tcgetattr(STDIN, &g_saved_attr) == -1))
 		return (err_getattr());
-	if ((tcgetattr(0, &tattr) == -1))
+	if ((tcgetattr(STDIN, &tattr) == -1))
 		return (err_getattr());
 	if (set_non_canonical_mode(&tattr) == 0)
 		return (0);
