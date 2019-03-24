@@ -27,5 +27,13 @@ int			setup_terminal(void)
 		return (err_getattr());
 	if ((tcgetattr(0, &tattr) == -1))
 		return (err_getattr());
+	tattr.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+	tattr.c_oflag &= ~OPOST;
+	tattr.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	tattr.c_cflag &= ~(CSIZE | PARENB);
+	tattr.c_cflag |= CS8; // ?*/
+	tattr.c_cc[VMIN] = 1;
+	tattr.c_cc[VTIME] = 0;
+	tcsetattr(0, TCSAFLUSH, &tattr);
 	return (1);
 }
