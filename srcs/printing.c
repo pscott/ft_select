@@ -54,7 +54,8 @@ void				print_list(t_arg_list *lst)
 {
 	t_arg_list		*tmp;
 	int				print_w;
-	int				to_print;
+	int				printed;
+	int				impair;
 	t_print_info	info;
 
 	info.nb_elem = 0;
@@ -62,23 +63,27 @@ void				print_list(t_arg_list *lst)
 	info.nb_chars = 0;
 	info.nb_lines = 1;
 	if (ioctl(STDOUT, TIOCGWINSZ, &(info.w)) == -1)
-		ft_putstr_fd("error: failed to use ioctl\n", STDERR);
+		term_putstr_endline("error: failed to use ioctl", STDERR);
 	print_w = get_print_width(lst, &info);
 	if (!(tmp = lst))
 	{
-		ft_putstr_fd("error: arg_list is empty\n", STDERR);
+		term_putstr_endline("error: arg_list is empty", STDERR);
 		return ;
 	}
 	ft_printf("%-*s", print_w, tmp->name);
-	to_print = info.nb_elem / info.nb_lines;
-	while ((tmp = jump_nodes(tmp, info.nb_lines)) && (tmp != lst) && !(tmp->deleted))
+	printed = 1;
+	impair = info.nb_elem % 2;
+	while ((tmp = jump_nodes(tmp, info.nb_lines)) && (printed < info.nb_elem))
 	{
-		if (to_print == 0)
+		if (tmp->deleted)
+			continue ;
+		if ((printed) % (info.nb_elem / info.nb_lines) == 0)
 		{
+			if (!impair)
+				tmp = tmp->next;
 			print_line();
-			to_print = info.nb_elem / info.nb_lines;
 		}
 		ft_printf("%-*s", print_w, tmp->name);
-		to_print--;
+		printed++;
 	}
 }

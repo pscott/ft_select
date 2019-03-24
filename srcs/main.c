@@ -35,7 +35,7 @@ static int		ft_select(char **av)
 			ft_printf("down");
 	}
 	if (ret == -1)
-		ft_putstr_fd("error: failed to read\n", 2);
+		term_putstr_endline("error: failed to read", 2);
 	free_list(lst);
 	return (0);
 }

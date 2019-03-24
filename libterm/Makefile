@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 10:29:04 by pscott            #+#    #+#              #
-#    Updated: 2019/03/24 18:18:47 by pscott           ###   ########.fr        #
+#    Updated: 2019/03/24 20:17:47 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,15 @@ LIBDIR		:= ../libft
 
 LIBS	:= -L $(LIBDIR) -lft -ltermcap
 CFLAGS	:= -Wall -Werror -I $(INCLDIR) -I $(LIBDIR)/includes
-SRC		:= execute_cap.c termcap_settings.c print_line.c
+SRC		:= execute_cap.c termcap_settings.c print_line.c cursor.c
 ERR		:= error_attr.c error_tgetent.c error_getenv.c error_getstr.c \
-	error_isatty.c
+	error_isatty.c error_tgoto.c
 
 ERRS	:= $(addprefix $(ERRDIR)/, $(ERR))
 SRCS	:= $(addprefix $(SRCDIR)/, $(SRC))
 SOURCE	:= $(SRCS) $(ERRS)
 OBJS	:= $(SOURCE:.c=.o)
-DEPS	:= Makefile $(INCLDIR)/libterm.h ../libft/libft.a
+DEPS	:= Makefile $(INCLDIR)/libterm.h $(INCLDIR)/cursor.h ../libft/libft.a
 NAME	:= libterm.a
 
 all: $(NAME)

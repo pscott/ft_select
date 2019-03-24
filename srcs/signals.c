@@ -15,7 +15,7 @@ static void	sig_handler(int signo)
 static void	sigint_handler(int signo)
 {
 	(void)signo;
-	ft_putstr_fd("\n", STDOUT);
+	print_line();
 }
 
 static void	sigwinch_handler(int signo)
