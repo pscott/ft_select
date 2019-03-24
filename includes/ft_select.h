@@ -18,4 +18,6 @@ void		free_list(t_arg_list *list);
 
 int			err_usage(void);
 
+void		signal_setup(void);
+
 #endif

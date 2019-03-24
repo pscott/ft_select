@@ -15,9 +15,11 @@ typedef struct	s_pos {
 				int	col;
 }				t_pos;
 
-int				setup_terminal(struct termios *saved_att);
-int				reset_terminal(struct termios *saved_att);
-int				execute_str(char *cap, struct termios *saved_attr);
+struct termios	g_saved_attr;
+
+int				setup_terminal(void);
+int				reset_terminal(void);
+int				execute_str(char *cap);
 
 int				err_setattr(void);
 int				err_getattr(void);

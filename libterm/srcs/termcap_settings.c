@@ -1,13 +1,14 @@
 #include "libterm.h"
 
-int			reset_terminal(struct termios *saved_attributes)
+int			reset_terminal(void)
 {
-	if ((tcsetattr(0, TCSANOW, saved_attributes) == -1))
+	write(1, "Reset\n", 6);
+	if ((tcsetattr(0, TCSANOW, &g_saved_attr) == -1))
 		return (err_setattr());
 	return (1);
 }
 
-int			setup_terminal(struct termios *saved_attributes)
+int			setup_terminal(void)
 {
 	char			term_buffer[2048];
 	char			*termtype;
@@ -22,8 +23,9 @@ int			setup_terminal(struct termios *saved_attributes)
 		return (err_noentry());
 	else if (res == -1)
 		return (err_no_database());
-	if ((tcgetattr(0, saved_attributes) == -1))
+	if ((tcgetattr(0, &g_saved_attr) == -1))
 		return (err_getattr());
-	(void)tattr;
+	if ((tcgetattr(0, &tattr) == -1))
+		return (err_getattr());
 	return (1);
 }

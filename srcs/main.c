@@ -12,17 +12,17 @@ int		ft_select(char **av)
 
 int	main(int ac, char **av)
 {
-	struct termios	saved_attr;
-
 	if (ac < 2)
 		return (err_usage());
-	if (setup_terminal(&saved_attr) == 0)
+	if (setup_terminal() == 0)
 		return (1);
 	else
 	{
 		av++;
+		signal_setup();
 		ft_select(av);
-		reset_terminal(&saved_attr);
+		while(42);
+		reset_terminal();
 		return (0);
 	}
 	return (1);

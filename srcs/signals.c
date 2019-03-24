@@ -1,11 +1,11 @@
 #include <signal.h>
-#include <stdio.h>
 #include <unistd.h>
+#include "libterm.h"
 
 
-void	sig_handler(int signo)
+static void	sig_handler(int signo)
 {
-	write(1, "Resetting\n", 10);
+	reset_terminal();
 	signal(SIGALRM, SIG_DFL);
 	signal(SIGVTALRM, SIG_DFL);
 	signal(SIGPROF, SIG_DFL);
@@ -24,13 +24,13 @@ void	sig_handler(int signo)
 	raise(signo);
 }
 
-void	sigint_handler(int signo)
+static void	sigint_handler(int signo)
 {
 	(void)signo;
 	write(1, "\n", 1);
 }
 
-void	signal_setup(void)
+void		signal_setup(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGALRM, sig_handler);
@@ -48,12 +48,4 @@ void	signal_setup(void)
 	signal(SIGTRAP, sig_handler);
 	signal(SIGEMT, sig_handler);
 	signal(SIGSYS, sig_handler);
-}
-
-int	main(void)
-{
-	signal_setup();
-	while (42)
-		;
-	return (0);
 }

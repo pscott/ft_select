@@ -1,6 +1,6 @@
 #include "libterm.h"
 
-int		execute_str(char *cap, struct termios *saved_attr)
+int		execute_str(char *cap)
 {
 	char	buf[50];
 	char	*cap_str;
