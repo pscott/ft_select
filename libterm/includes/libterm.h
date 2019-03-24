@@ -10,6 +10,12 @@
 # define PRINT_LINE "do"
 # define ERASE_ENDLINE "ce"
 # define MOVE_CURSOR "cm"
+# define HIGHLIGHT "so"
+# define NO_HIGHLIGHT "se"
+# define UNDERLINE "us"
+# define NO_UNDERLINE "ue"
+
+
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2

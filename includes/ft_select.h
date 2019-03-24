@@ -4,6 +4,7 @@
 # include "libterm.h"
 # include <sys/ioctl.h>
 # define BUF_SIZE 7
+# define SPACING 2
 
 typedef struct	s_arg_list {
 	char				*name;
@@ -20,6 +21,7 @@ typedef struct	s_print_info {
 	int				max_name_size;
 	int				nb_chars;
 	int				nb_lines;
+	int				elem_per_line;
 	struct winsize	w;
 }				t_print_info;
 
