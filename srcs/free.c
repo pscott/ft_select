@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-static void	free_node(t_arg_list *lst)
+void	free_node(t_arg_list *lst)
 {
 	ft_memdel((void*)&lst->name);
 	ft_memdel((void*)&lst);

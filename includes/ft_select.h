@@ -1,7 +1,6 @@
 #ifndef FT_SELECT_H
 # define FT_SELECT_H
 
-# include <stdio.h>
 # include "libterm.h"
 
 typedef struct	s_arg_list {
@@ -12,9 +11,10 @@ typedef struct	s_arg_list {
 }				t_arg_list;
 
 t_arg_list	*create_list(char **av);
-void		print_list(t_arg_list *list);
+void		print_list(t_arg_list *lst);
 
-void		free_list(t_arg_list *list);
+void		free_list(t_arg_list *lst);
+void		free_node(t_arg_list *lst);
 
 int			err_usage(void);
 

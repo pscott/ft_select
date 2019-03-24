@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-void		print_list(t_arg_list *lst)
+void				print_list(t_arg_list *lst)
 {
 	t_arg_list	*tmp;
 
@@ -16,7 +16,7 @@ void		print_list(t_arg_list *lst)
 	ft_printf("\n");
 }
 
-t_arg_list	*create_node(char *name)
+static t_arg_list	*create_node(char *name)
 {
 	t_arg_list *res;
 
@@ -32,7 +32,7 @@ t_arg_list	*create_node(char *name)
 	return (res);
 }
 
-t_arg_list	*add_node(t_arg_list *new, t_arg_list **lst)
+static t_arg_list	*add_node(t_arg_list *new, t_arg_list **lst)
 {
 	t_arg_list	*tail;
 	t_arg_list	*head;
@@ -41,6 +41,8 @@ t_arg_list	*add_node(t_arg_list *new, t_arg_list **lst)
 		return (NULL);
 	if (!*lst)
 		return (new);
+	if (!new)
+		return (*lst);
 	head = (*lst);
 	tail = head->prev;
 	new->prev = tail;
@@ -50,8 +52,7 @@ t_arg_list	*add_node(t_arg_list *new, t_arg_list **lst)
 	return (head);
 }
 
-
-t_arg_list	*create_list(char **av)
+t_arg_list			*create_list(char **av)
 {
 	t_arg_list *lst;
 
@@ -64,4 +65,19 @@ t_arg_list	*create_list(char **av)
 		av++;
 	}
 	return (lst);
+}
+
+t_arg_list			*delete_node(t_arg_list **node)
+{
+	t_arg_list	*prev;
+	t_arg_list	*next;
+
+	if (!node || !*node)
+		return (NULL);
+	prev = (*node)->prev;
+	next = (*node)->next;
+	prev->next = next;
+	next->prev = prev;
+	free_node(*node);
+	return (next);
 }

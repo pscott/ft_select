@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-int		ft_select(char **av)
+static int		ft_select(char **av)
 {
 	t_arg_list	*lst;
 
@@ -10,19 +10,21 @@ int		ft_select(char **av)
 	return (1);
 }
 
-int	main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	if (ac < 2)
 		return (err_usage());
-	if (setup_terminal() == 0)
+	if (setup_terminal_settings() == 0)
+	{
+		reset_terminal_settings();
 		return (1);
+	}
 	else
 	{
 		av++;
 		signal_setup();
 		ft_select(av);
-		while(42);
-		reset_terminal();
+		reset_terminal_settings();
 		return (0);
 	}
 	return (1);

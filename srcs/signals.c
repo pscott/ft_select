@@ -2,10 +2,13 @@
 #include <unistd.h>
 #include "libterm.h"
 
+/*
+** Handler function for terminating (ie dangerous) signals
+*/
 
 static void	sig_handler(int signo)
 {
-	reset_terminal();
+	reset_terminal_settings();
 	signal(signo, SIG_DFL);
 	raise(signo);
 }
@@ -21,6 +24,15 @@ static void	sigwinch_handler(int signo)
 	(void)signo;
 	write(1, "Windows changed\n", ft_strlen("Windows changed\n"));
 }
+
+/*
+** Setting up signal functions.
+** KILL and STOP are not handled, and WILL leave you with a messy terminal
+** Terminating (ie dangerous) signals reset the terminal, and then
+** handles the signal with SIG_DFL.
+** All non-terminating signals are left untouched, execpt WINCH
+** INT signal does NOT exit the program.
+*/
 
 void		signal_setup(void)
 {

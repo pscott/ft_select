@@ -17,11 +17,12 @@ typedef struct	s_pos {
 
 struct termios	g_saved_attr;
 
-int				setup_terminal(void);
-int				reset_terminal(void);
+int				setup_terminal_settings(void);
+int				reset_terminal_settings(void);
 int				execute_str(char *cap);
 
 int				err_setattr(void);
+int				err_resetattr(void);
 int				err_getattr(void);
 int				err_noentry(void);
 int				err_no_database(void);

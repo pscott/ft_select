@@ -1,14 +1,28 @@
 #include "libterm.h"
 
-int			reset_terminal(void)
+int			reset_terminal_settings(void)
 {
 	write(1, "Reset\n", 6);
 	if ((tcsetattr(0, TCSANOW, &g_saved_attr) == -1))
-		return (err_setattr());
-	return (1);
+		return (err_resetattr());
+	return (0);
 }
 
-int			setup_terminal(void)
+int		set_non_canonical_mode(struct termios *tattr)
+{
+	tattr->c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR
+			| ICRNL | IXON);
+	tattr->c_oflag &= ~OPOST;
+	tattr->c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+	tattr->c_cflag &= ~(CSIZE | PARENB);
+	tattr->c_cflag |= CS8;
+	tattr->c_cc[VMIN] = 1;
+	tattr->c_cc[VTIME] = 0;
+	tcsetattr(0, TCSAFLUSH, tattr);
+	return (0);
+}
+
+int			setup_terminal_settings(void)
 {
 	char			term_buffer[2048];
 	char			*termtype;
@@ -27,13 +41,7 @@ int			setup_terminal(void)
 		return (err_getattr());
 	if ((tcgetattr(0, &tattr) == -1))
 		return (err_getattr());
-	tattr.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
-	tattr.c_oflag &= ~OPOST;
-	tattr.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-	tattr.c_cflag &= ~(CSIZE | PARENB);
-	tattr.c_cflag |= CS8; // ?*/
-	tattr.c_cc[VMIN] = 1;
-	tattr.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSAFLUSH, &tattr);
+	if (set_non_canonical_mode(&tattr) == 0)
+		return (0);
 	return (1);
 }
