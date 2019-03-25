@@ -7,9 +7,9 @@
 # include "cursor.h"
 
 # define CLEAR "cl"
+# define CLEAR_BELOW "cd"
 # define PRINT_LINE "do"
 # define ERASE_ENDLINE "ce"
-# define MOVE_CURSOR "cm"
 # define HIGHLIGHT "so"
 # define NO_HIGHLIGHT "se"
 # define UNDERLINE "us"

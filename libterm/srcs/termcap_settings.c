@@ -6,6 +6,7 @@ int			reset_terminal_settings(void)
 		return (0);
 	if ((tcsetattr(0, TCSANOW, &g_saved_attr) == -1))
 		return (err_resetattr());
+	execute_str(VISIBLE);
 	print_line();
 	return (1);
 }

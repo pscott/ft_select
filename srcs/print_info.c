@@ -37,7 +37,7 @@ static int			get_print_width(t_arg_list *lst, t_print_info *info)
 	info->nb_chars = info->nb_elem * (info->max_name_size + SPACING);
 	while ((info->nb_chars / info->nb_lines) >= info->w.ws_col)
 		info->nb_lines++;
-	info->elem_per_line = info->nb_elem / info->nb_lines;
+	info->elem_per_line =  info->w.ws_col / (info->max_name_size + SPACING);
 	return (info->max_name_size);
 }
 
@@ -51,5 +51,6 @@ int				get_print_info(t_arg_list *lst, t_print_info *info)
 	info->nb_lines = 1;
 	info->print_width = 0;
 	info->print_width = get_print_width(lst, info);
+	retrieve_pos(&(info->pos));
 	return (1);
 }

@@ -26,7 +26,27 @@ static	void		print_node(t_arg_list *tmp, int width)
 		execute_str(NO_HIGHLIGHT);
 	if (tmp->current)
 		execute_str(NO_UNDERLINE);
-	write(STDOUT, "  ", 2);
+	write(STDIN, "  ", 2);
+}
+
+void				print_selected(t_arg_list *lst, t_print_info *info)
+{
+	t_arg_list		*tmp;
+	int				print_w;
+
+	print_w = info->print_width;
+	if (!(tmp = lst))
+	{
+		term_putstr_endline("error: arg_list is empty", STDERR);
+		return ;
+	}
+	if (tmp->highlighted)
+		print_node(tmp, print_w);
+	while ((tmp = tmp->next) && (tmp != lst))
+	{
+		if (tmp->highlighted)
+			print_node(tmp, print_w);
+	}
 }
 
 void				print_list(t_arg_list *lst, t_print_info *info)
@@ -35,7 +55,8 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 	int				print_w;
 	int				printed;
 
-	print_w = info->print_width + SPACING;
+	execute_str("sc");
+	print_w = info->print_width;
 	if (!(tmp = lst))
 	{
 		term_putstr_endline("error: arg_list is empty", STDERR);
@@ -54,4 +75,6 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		print_node(tmp, print_w);
 		printed++;
 	}
+//	move_cursor(info->pos.col, info->pos.row);
+	execute_str("rc");
 }

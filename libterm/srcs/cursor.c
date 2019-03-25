@@ -23,7 +23,7 @@ static void	get_pos(char *pos_str)
 {
 	int	len;
 
-	write(0, GET_POS, 4); //tputs ?
+	tputs(GET_POS, 1, ft_putchar);//write(0, GET_POS, 4);
 	if ((len = read(STDIN, pos_str, 20) > 0))
 		pos_str[len] = 0;
 	else if (len == -1)
@@ -48,10 +48,10 @@ int		move_cursor(int col, int row)
 	sanitize_pos_values(&col, &row);
 	ft_bzero(buf, 50);
 	ap = buf;
-	if (!(gotostr = tgetstr("cm", &ap)))
-		return (err_no_str("cm"));
+	if (!(gotostr = tgetstr(MOVE_CURSOR, &ap)))
+		return (err_no_str(MOVE_CURSOR));
 	if (!(gotostr = tgoto(gotostr, col, row)))
-		return (err_tgoto("cm"));
-	write(0, gotostr, ft_strlen(gotostr)); //tputs ?
+		return (err_tgoto(MOVE_CURSOR));
+	tputs(gotostr, 1, ft_putchar); //tputs ?
 	return (1);
 }

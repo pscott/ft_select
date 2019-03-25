@@ -6,14 +6,17 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 13:26:36 by pscott            #+#    #+#             */
-/*   Updated: 2018/11/09 12:04:41 by pscott           ###   ########.fr       */
+/*   Updated: 2019/03/25 13:50:38 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
 
-void	ft_putchar(char c)
+int		ft_putchar(int c)
 {
-	write(1, &c, 1);
+	if (write(1, &c, 1) >= 0)
+		return (1);
+	else
+		return (0);
 }

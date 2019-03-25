@@ -24,9 +24,14 @@ static int		ft_select(char **av)
 	{
 		buf[BUF_SIZE] = 0;
 		if (ft_strncmp(buf, "\004", 1) == 0)
-			break;
+			break ;
+		else if (ft_strncmp(buf, "a", 1) == 0)
+		{
+			if (ioctl(STDOUT, TIOCSTI, "\x1A") == -1)
+				ft_printf("aie");
+		}
 		else if (ft_strncmp(buf, "\r", 1) == 0)
-			print_line();
+			break ;
 		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
 			move_right(lst, &info, "right");
 		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
@@ -38,6 +43,8 @@ static int		ft_select(char **av)
 	}
 	if (ret == -1)
 		term_putstr_endline("error: failed to read", 2);
+	reset_terminal_settings();
+	print_selected(lst, &info);
 	free_list(lst);
 	return (0);
 }
@@ -53,6 +60,7 @@ int				main(int ac, char **av)
 	}
 	else
 	{
+		execute_str(INVISIBLE);
 		av++;
 		signal_setup();
 		ft_select(av);

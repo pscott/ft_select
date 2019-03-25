@@ -18,6 +18,24 @@ static void	sigint_handler(int signo)
 	print_line();
 }
 
+static void	sigcont_handler(int signo)
+{
+	t_print_info	*info;
+	t_arg_list		*lst;
+
+	info = info_addr(NULL);
+	lst = lst_addr(NULL);
+	if (setup_terminal_settings() == 0)
+	{
+		reset_terminal_settings();
+		exit(1);
+	}
+	execute_str(INVISIBLE);
+	get_print_info(lst, info);
+	print_list(lst, info);
+	(void)signo;
+}
+
 static void	sigwinch_handler(int signo)
 {
 	t_print_info	*info;
@@ -43,6 +61,7 @@ void		signal_setup(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGWINCH, sigwinch_handler);
+	signal(SIGCONT, sigcont_handler);
 	signal(SIGHUP, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	signal(SIGILL, sig_handler);

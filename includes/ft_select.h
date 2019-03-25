@@ -23,10 +23,12 @@ typedef struct	s_print_info {
 	int				elem_per_line;
 	int				print_width;
 	struct winsize	w;
+	t_pos			pos;
 }				t_print_info;
 
 t_arg_list		*create_list(char **av);
 void			print_list(t_arg_list *lst, t_print_info *info);
+void			print_selected(t_arg_list *lst, t_print_info *info);
 t_arg_list		*lst_addr(t_arg_list **lst);
 t_print_info	*info_addr(t_print_info **info);
 
