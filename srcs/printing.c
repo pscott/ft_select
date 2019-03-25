@@ -74,7 +74,7 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 				ft_printf("!!");
 				print_node(tmp, print_w);
 			}*/
-			if ((info->nb_elem - total_printed) % info->nb_lines)
+			if (((info->nb_elem - total_printed) % info->nb_lines) && (info->w.ws_col / (info->max_name_size + SPACING) > i))
 			{
 				print_node(tmp, print_w);
 				total_printed++;

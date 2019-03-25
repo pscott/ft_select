@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-int		move_right(t_arg_list *lst, t_print_info *info, char *direction)
+int		move_vertically(t_arg_list *lst, t_print_info *info, char *direction)
 {
 	t_arg_list *tmp;
 
@@ -9,11 +9,51 @@ int		move_right(t_arg_list *lst, t_print_info *info, char *direction)
 	tmp = lst;
 	while (!tmp->current)
 		tmp = tmp->next;
-	if (ft_strncmp(direction, "right", 6) == 0)
+	if (ft_strncmp(direction, "down", 5) == 0)
 	{
 		tmp->current = 0;
 		tmp->next->current = 1;
 	}
+	else if (ft_strncmp(direction, "up", 3) == 0)
+	{
+		tmp->current = 0;
+		tmp->prev->current = 1;
+	}
 	print_list(lst, info);
+	return (1);
+}
+
+int		move_horizontally(t_arg_list *lst, t_print_info *info, char *direction)
+{
+	t_arg_list *tmp;
+	int			jmp;
+
+	if (!lst)
+		return (0);
+	tmp = lst;
+	while (!tmp->current)
+		tmp = tmp->next;
+	tmp->current = 0;
+	jmp = 0;
+	if (ft_strncmp(direction, "right", 6) == 0)
+	{
+		if (((tmp->id / info->nb_lines) + 1) == info->elem_per_line)
+			jmp++;
+		jmp += info->nb_lines;
+	}
+	else if (ft_strncmp(direction, "left", 5) == 0)
+	{
+		if ((((tmp->id - 1) / info->nb_lines) <= 0))
+			jmp--;
+		else
+			jmp -= info->nb_lines;
+	}
+//	ft_printf("JMP: %d\n", jmp);
+//	sleep(3);
+	tmp = jump_nodes(tmp, jmp);
+	tmp->current = 1;
+	print_list(lst, info);
+//	print_info(info);
+//	ft_printf(" HERE: %d\n", tmp->id);
 	return (1);
 }

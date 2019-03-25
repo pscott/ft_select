@@ -9,13 +9,6 @@ static void	sig_handler(int signo)
 {
 	reset_terminal_settings();
 	signal(signo, SIG_DFL);
-	raise(signo);
-}
-
-static void	sigint_handler(int signo)
-{
-	(void)signo;
-	print_line();
 }
 
 static void	sigcont_handler(int signo)
@@ -53,15 +46,15 @@ static void	sigwinch_handler(int signo)
 ** KILL and STOP are not handled, and WILL leave you with a messy terminal
 ** Terminating (ie dangerous) signals reset the terminal, and then
 ** handles the signal with SIG_DFL.
-** All non-terminating signals are left untouched, execpt WINCH
+** All non-terminating signals are left untouched, except WINCH and CONT
 ** INT signal does NOT exit the program.
 */
 
 void		signal_setup(void)
 {
-	signal(SIGINT, sigint_handler);
 	signal(SIGWINCH, sigwinch_handler);
 	signal(SIGCONT, sigcont_handler);
+	signal(SIGINT, sig_handler);
 	signal(SIGHUP, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	signal(SIGILL, sig_handler);

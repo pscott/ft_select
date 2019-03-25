@@ -33,13 +33,13 @@ static int		ft_select(char **av)
 		else if (ft_strncmp(buf, "\r", 1) == 0)
 			break ;
 		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
-			move_right(lst, &info, "right");
+			move_horizontally(lst, &info, "right");
 		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
-			ft_printf("left");
+			move_horizontally(lst, &info, "left");
 		else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0)
-			ft_printf("up");
+			move_vertically(lst, &info, "up");
 		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0)
-			ft_printf("down");
+			move_vertically(lst, &info, "down");
 	}
 	if (ret == -1)
 		term_putstr_endline("error: failed to read", 2);

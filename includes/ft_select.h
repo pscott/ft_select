@@ -34,6 +34,8 @@ t_arg_list		*lst_addr(t_arg_list **lst);
 t_print_info	*info_addr(t_print_info **info);
 
 
+void			print_info(t_print_info *info);
+t_arg_list		*jump_nodes(t_arg_list *lst, int num);
 void			free_list(t_arg_list *lst);
 void			free_node(t_arg_list *lst);
 
@@ -42,6 +44,7 @@ int				err_usage(void);
 void			signal_setup(void);
 int				get_print_info(t_arg_list *lst, t_print_info *info);
 
-int				move_right(t_arg_list *lst, t_print_info *info, char *direction);
+int				move_vertically(t_arg_list *lst, t_print_info *info, char *direction);
+int				move_horizontally(t_arg_list *lst, t_print_info *info, char *direction);
 
 #endif
