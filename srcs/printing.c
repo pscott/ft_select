@@ -53,9 +53,9 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 {
 	t_arg_list		*tmp;
 	int				print_w;
-	int				printed;
+	int				i;
+	int				total_printed;
 
-	execute_str("sc");
 	print_w = info->print_width;
 	if (!(tmp = lst))
 	{
@@ -63,7 +63,33 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		return ;
 	}
 	print_node(tmp, print_w);
-	printed = 1;
+	i = 1;
+	total_printed = 1;
+	while ((tmp = jump_nodes(tmp, info->nb_lines)) && (total_printed < info->nb_elem))
+	{
+		if ((i % info->elem_per_line) == 0)
+		{
+/*			if ((info->nb_elem - lst->id) % info->elem_per_line)
+			{
+				ft_printf("!!");
+				print_node(tmp, print_w);
+			}*/
+			if ((info->nb_elem - total_printed) % info->nb_lines)
+			{
+				print_node(tmp, print_w);
+				total_printed++;
+				tmp = jump_nodes(tmp, info->nb_lines);
+			}
+			if (((info->nb_elem) % info->nb_lines) == 0)
+				tmp = tmp->next;
+			print_line();
+			i = 0;
+		}
+		print_node(tmp, print_w);
+		total_printed++;
+		i++;
+	}
+	/*
 	while ((tmp = jump_nodes(tmp, info->nb_lines)) && (printed < info->nb_elem))
 	{
 		if (((printed) % info->elem_per_line == 0))
@@ -74,7 +100,7 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		}
 		print_node(tmp, print_w);
 		printed++;
-	}
+	}*/
 //	move_cursor(info->pos.col, info->pos.row);
-	execute_str("rc");
+	execute_str(RESTORE_CURSOR);
 }

@@ -12,6 +12,7 @@ typedef struct	s_arg_list {
 	struct s_arg_list	*next;
 	struct s_arg_list	*prev;
 	char				current;
+	int					id;
 	char				highlighted;
 }				t_arg_list;
 

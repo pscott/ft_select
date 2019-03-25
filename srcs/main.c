@@ -43,7 +43,7 @@ static int		ft_select(char **av)
 	}
 	if (ret == -1)
 		term_putstr_endline("error: failed to read", 2);
-	reset_terminal_settings();
+	execute_str(CLEAR_BELOW);
 	print_selected(lst, &info);
 	free_list(lst);
 	return (0);

@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-static t_arg_list	*create_node(char *name)
+static t_arg_list	*create_node(char *name, int id)
 {
 	t_arg_list *res;
 
@@ -13,7 +13,8 @@ static t_arg_list	*create_node(char *name)
 	res->len = ft_strlen(name);
 	res->current = 0;
 	res->highlighted = 0;
-	res-> prev = 0;
+	res->prev = 0;
+	res->id = id;
 	res->next = res;
 	res->prev = res;
 	return (res);
@@ -42,14 +43,17 @@ static t_arg_list	*add_node(t_arg_list *new, t_arg_list **lst)
 t_arg_list			*create_list(char **av)
 {
 	t_arg_list *lst;
+	int			id;
 
+	id = 1;
 	if (!av || !(*av))
 		return (NULL);
 	lst = NULL;
 	while (*av)
 	{
-		lst = add_node(create_node(*av), &lst);
+		lst = add_node(create_node(*av, id), &lst);
 		av++;
+		id++;
 	}
 	lst_addr(&lst);
 	return (lst);

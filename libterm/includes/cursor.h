@@ -7,6 +7,8 @@
 # define GET_POS "\x1b\x5b\x36\x6e"
 # define BEGIN_LINE "cr"
 # define MOVE_CURSOR "cm"
+# define SAVE_CURSOR "sc"
+# define RESTORE_CURSOR "rc"
 # define INVISIBLE "vi"
 # define VISIBLE "ve"
 
