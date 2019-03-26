@@ -37,9 +37,10 @@ int		move_horizontally(t_arg_list *lst, t_print_info *info, char *direction)
 	jmp = 0;
 	if (ft_strncmp(direction, "right", 6) == 0)
 	{
-		if (((tmp->id / info->nb_lines) + 1) == info->elem_per_line)
-			jmp++;
-		jmp += info->nb_lines;
+		if (tmp->id + info->nb_lines > info->nb_elem)
+			jmp = info->nb_elem - tmp->id + (tmp->id % info->nb_lines + 1);
+		else
+			jmp = info->nb_lines;
 	}
 	else if (ft_strncmp(direction, "left", 5) == 0)
 	{
