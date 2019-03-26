@@ -52,55 +52,31 @@ void				print_selected(t_arg_list *lst, t_print_info *info)
 void				print_list(t_arg_list *lst, t_print_info *info)
 {
 	t_arg_list		*tmp;
-	int				print_w;
-	int				i;
+	int				disp_size;
+	int				should_shift;
 	int				total_printed;
+	int				jmp;
 
-	print_w = info->print_width;
 	if (!(tmp = lst))
 	{
 		term_putstr_endline("error: arg_list is empty", STDERR);
 		return ;
 	}
-	print_node(tmp, print_w);
-	i = 1;
-	total_printed = 1;
-	while ((tmp = jump_nodes(tmp, info->nb_lines)) && (total_printed < info->nb_elem))
+	total_printed = 0;
+	disp_size = info->nb_lines * info->elem_per_line;
+	should_shift = info->nb_elem == disp_size;
+	while (total_printed < info->nb_elem)
 	{
-		if ((i % info->elem_per_line) == 0)
+		print_node(tmp, info->print_width);
+		if (tmp->id + info->nb_lines > info->nb_elem)
 		{
-/*			if ((info->nb_elem - lst->id) % info->elem_per_line)
-			{
-				ft_printf("!!");
-				print_node(tmp, print_w);
-			}*/
-			if (((info->nb_elem - total_printed) % info->nb_lines) && (info->w.ws_col / (info->max_name_size + SPACING) > i))
-			{
-				print_node(tmp, print_w);
-				total_printed++;
-				tmp = jump_nodes(tmp, info->nb_lines);
-			}
-			if (((info->nb_elem) % info->nb_lines) == 0)
-				tmp = tmp->next;
 			print_line();
-			i = 0;
+			jmp = info->nb_elem - tmp->id + (tmp->id % info->nb_lines + 1);
 		}
-		print_node(tmp, print_w);
+		else
+			jmp = info->nb_lines;
+		tmp = jump_nodes(tmp, jmp);
 		total_printed++;
-		i++;
 	}
-	/*
-	while ((tmp = jump_nodes(tmp, info->nb_lines)) && (printed < info->nb_elem))
-	{
-		if (((printed) % info->elem_per_line == 0))
-		{
-			if (!(info->nb_elem % info->nb_lines))
-				tmp = tmp->next;
-			print_line();
-		}
-		print_node(tmp, print_w);
-		printed++;
-	}*/
-//	move_cursor(info->pos.col, info->pos.row);
 	execute_str(RESTORE_CURSOR);
 }
