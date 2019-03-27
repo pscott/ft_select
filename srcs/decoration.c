@@ -19,6 +19,8 @@ int		move_vertically(t_arg_list *lst, t_print_info *info, char *direction)
 		tmp->current = 0;
 		tmp->prev->current = 1;
 	}
+	else
+		return (0);
 	print_list(lst, info);
 	return (1);
 }
@@ -44,11 +46,13 @@ int		move_horizontally(t_arg_list *lst, t_print_info *info, char *direction)
 	}
 	else if (ft_strncmp(direction, "left", 5) == 0)
 	{
-		if ((((tmp->id - 1) / info->nb_lines) <= 0))
-			jmp--;
+		if (tmp->id - info->nb_lines < 1)
+			jmp = -tmp->id - (tmp->nb_elem % info->nb_lines) - tmp->id - 1;
 		else
-			jmp -= info->nb_lines;
+			jmp = -info->nb_lines;
 	}
+	else
+		return (0);
 //	ft_printf("JMP: %d\n", jmp);
 //	sleep(3);
 	tmp = jump_nodes(tmp, jmp);
