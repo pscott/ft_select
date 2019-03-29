@@ -59,6 +59,16 @@ t_arg_list			*create_list(char **av)
 	return (lst);
 }
 
+void			reset_lst(t_arg_list *lst)
+{
+	t_arg_list *tmp;
+
+	tmp = lst;
+	tmp->highlighted= 0;
+	while ((tmp = tmp->next) && (tmp != lst))
+		tmp->highlighted = 0;
+}
+
 t_print_info	*info_addr(t_print_info **new)
 {
 	static t_print_info	*info = NULL;

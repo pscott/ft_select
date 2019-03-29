@@ -1,13 +1,13 @@
 #include "ft_select.h"
 
-static int			get_print_width(t_arg_list *lst, t_print_info *info)
+static void		fill_print_info(t_arg_list *lst, t_print_info *info)
 {
 	int			i;
 	int			max;
 	t_arg_list *tmp;
 
 	if (!lst)
-		return (0);
+		return ;
 	info->nb_elem = lst->prev->id;
 	i = -1;
 	max = 0;
@@ -19,7 +19,6 @@ static int			get_print_width(t_arg_list *lst, t_print_info *info)
 	info->elem_per_line = info->w.ws_col / (info->max_name_size + SPACING);
 	while (info->elem_per_line * info->nb_lines < info->nb_elem)
 		info->nb_lines++;
-	return (info->max_name_size);
 }
 
 int				get_print_info(t_arg_list *lst, t_print_info *info)
@@ -27,13 +26,10 @@ int				get_print_info(t_arg_list *lst, t_print_info *info)
 	info_addr(&info);
 	if (ioctl(STDOUT, TIOCGWINSZ, &(info->w)) == -1)
 		term_putstr_endline("error: failed to use ioctl. Expect some undefined behaviors.", STDERR);
-	execute_str(SAVE_CURSOR);
 	execute_str(CLEAR_BELOW);
 	info->nb_elem = 0;
 	info->max_name_size = 0;
 	info->nb_lines = 1;
-	info->print_width = 0;
-	info->print_width = get_print_width(lst, info);
-	retrieve_pos(&(info->pos));
+	fill_print_info(lst, info);
 	return (1);
 }

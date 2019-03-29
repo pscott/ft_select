@@ -31,6 +31,10 @@
 # define TAB_LEN 1
 # define RTAB "\x1b\x5b\x5a"
 # define RTAB_LEN 3
+# define ESCAPE "\x1b"
+# define ESCAPE_LEN 1
+# define BACKSPACE "\x7f"
+# define BACKSPACE_LEN 1
 
 struct termios	g_saved_attr;
 

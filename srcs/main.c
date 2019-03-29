@@ -23,15 +23,14 @@ static int		ft_select(char **av)
 	while ((ret = read(STDIN, buf, BUF_SIZE) > 0))
 	{
 		buf[BUF_SIZE] = 0;
-		if (ft_strncmp(buf, "\004", 1) == 0)
-			break ;
-		else if (ft_strncmp(buf, "a", 1) == 0)
+
+		if (ft_strncmp(buf, "a", 1) == 0)
 		{
 			if (ioctl(STDOUT, TIOCSTI, "\x1A") == -1)
 				ft_printf("aie");
 		}
 		else if (ft_strncmp(buf, SPACE, SPACE_LEN) == 0)
-			select_node(lst, &info);
+			highlight_node(lst, &info);
 		else if (ft_strncmp(buf, "\r", 1) == 0)
 			break ;
 		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
@@ -42,13 +41,41 @@ static int		ft_select(char **av)
 			move_vertically(lst, &info, "up");
 		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0 || ft_strncmp(buf, TAB, TAB_LEN) == 0)
 			move_vertically(lst, &info, "down");
+		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0)
+		{
+			if (info.nb_elem == 1)
+			{
+				execute_str(CLEAR_BELOW);
+				return (0);
+			}
+			else
+				lst = delete_node(lst, &info);
+		}
+		else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN) == 0)
+		{
+			reset_lst(lst);
+			break;
+		}
+		ft_memset(buf, 0, BUF_SIZE);
 	}
-	if (ret == -1)
-		term_putstr_endline("error: failed to read", 2);
 	execute_str(CLEAR_BELOW);
-	print_selected(lst, &info);
-	free_list(lst);
-	return (0);
+	if (ret == -1)
+	{
+		term_putstr_endline("error: failed to read", 2);
+		free_list(lst);
+		return (0);
+	}
+	else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN) == 0)
+	{
+		free_list(lst);
+		return (0);
+	}
+	else
+	{
+		print_selected(lst);
+		free_list(lst);
+		return (1);
+	}
 }
 
 int				main(int ac, char **av)
@@ -57,6 +84,7 @@ int				main(int ac, char **av)
 		return (err_usage());
 	if (setup_terminal_settings() == 0)
 	{
+		print_line();
 		reset_terminal_settings();
 		return (1);
 	}
@@ -65,7 +93,8 @@ int				main(int ac, char **av)
 		execute_str(INVISIBLE);
 		av++;
 		signal_setup();
-		ft_select(av);
+		if (ft_select(av))
+			print_line();
 		if (reset_terminal_settings())
 			return (0);
 		else

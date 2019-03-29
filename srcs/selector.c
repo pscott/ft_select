@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-int		select_node(t_arg_list *lst, t_print_info *info)
+int		highlight_node(t_arg_list *lst, t_print_info *info)
 {
 	t_arg_list *tmp;
 
