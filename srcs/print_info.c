@@ -5,27 +5,6 @@ void			print_info(t_print_info *info)
 	ft_printf("ELEMS: %d, MAX_NAME: %d, NB_CHARS: %d, NB_LINES: %d, ELEM_PER_LINE: %d, SIZE: %d", info->nb_elem, info->max_name_size, info->nb_chars, info->nb_lines, info->elem_per_line, info->w.ws_col);
 	print_line();
 }
-/*
-static void			update_info(t_arg_list *lst, t_print_info *info)
-{
-	int		name_size;
-
-	name_size = lst->len;
-	if (name_size > info->max_name_size)
-		info->max_name_size = name_size;
-}
-
-static void			get_args_len(t_arg_list *lst, t_print_info *info)
-{
-	t_arg_list	*tmp;
-
-	if (!lst)
-		return ;
-	if ((tmp = lst))
-		update_info(tmp, info);
-	while ((tmp = tmp->next) && tmp != lst)
-		update_info(tmp, info);
-}*/
 
 static int			get_print_width(t_arg_list *lst, t_print_info *info)
 {
@@ -43,9 +22,9 @@ static int			get_print_width(t_arg_list *lst, t_print_info *info)
 		max = (tmp->len > max) ? tmp->len : max;
 	info->max_name_size = max;
 	info->nb_chars = info->nb_elem * (info->max_name_size + SPACING);
-	while ((info->nb_chars / info->nb_lines) >= info->w.ws_col)
+	info->elem_per_line = info->w.ws_col / (info->max_name_size + SPACING);
+	while (info->elem_per_line * info->nb_lines < info->nb_elem)
 		info->nb_lines++;
-	info->elem_per_line = info->nb_elem / info->nb_lines;
 	return (info->max_name_size);
 }
 
@@ -53,7 +32,7 @@ int				get_print_info(t_arg_list *lst, t_print_info *info)
 {
 	info_addr(&info);
 	if (ioctl(STDOUT, TIOCGWINSZ, &(info->w)) == -1)
-		term_putstr_endline("error: failed to use ioctl", STDERR);
+		term_putstr_endline("error: failed to use ioctl. Expect some undefined behaviors.", STDERR);
 	execute_str(SAVE_CURSOR);
 	execute_str(CLEAR_BELOW);
 	info->nb_elem = 0;

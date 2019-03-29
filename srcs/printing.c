@@ -52,8 +52,6 @@ void				print_selected(t_arg_list *lst, t_print_info *info)
 void				print_list(t_arg_list *lst, t_print_info *info)
 {
 	t_arg_list		*tmp;
-	int				disp_size;
-	int				should_shift;
 	int				total_printed;
 	int				jmp;
 
@@ -63,8 +61,6 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		return ;
 	}
 	total_printed = 0;
-	disp_size = info->nb_lines * info->elem_per_line;
-	should_shift = info->nb_elem == disp_size;
 	while (total_printed < info->nb_elem)
 	{
 		print_node(tmp, info->print_width);
