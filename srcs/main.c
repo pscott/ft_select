@@ -50,8 +50,8 @@ static int		ft_select(char **av)
 			reset_lst(lst);
 			break;
 		}
-		else
-			magic_print(buf);
+		else if (ft_strncmp(buf, "\x1a", 1) == 0)
+			sigtstp_handler(SIGTSTP);
 		print_list(lst, &info);
 		ft_memset(buf, 0, BUF_SIZE);
 	}

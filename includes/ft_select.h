@@ -40,7 +40,7 @@ void			free_node(t_arg_list *lst);
 int				err_usage(void);
 
 void			signal_setup(void);
-void			sigtstp_inject(void);
+void			sigtstp_handler(int signo);
 int				get_print_info(t_arg_list *lst, t_print_info *info);
 
 int				move_vertically(t_arg_list *lst, char *direction);

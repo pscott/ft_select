@@ -4,9 +4,9 @@ int			reset_terminal_settings(void)
 {
 	if (isatty(0) == 0)
 		return (0);
+	execute_str(VISIBLE);
 	if ((tcsetattr(0, TCSANOW, &g_saved_attr) == -1))
 		return (err_resetattr());
-	execute_str(VISIBLE);
 	return (1);
 }
 

@@ -2,24 +2,18 @@
 #include <signal.h>
 
 /*
-** Handler function for terminating (ie dangerous) signals
+** Handler function for terminating (aka dangerous) signals
 */
 
 static void	sig_handler(int signo)
 {
-	reset_terminal_settings();
-	signal(signo, SIG_DFL);
-	raise(signo);
-}
+	t_arg_list *lst;
 
-/*static void sigtstp_handler(int signo)
-{
-	ft_printf("HEY");
-	print_line();
+	lst = lst_addr(NULL);
 	reset_terminal_settings();
-	signal(signo, SIG_DFL);
-	raise(signo);
-}*/
+	free_list(lst);
+	exit (signo);
+}
 
 static void	sigcont_handler(int signo)
 {
@@ -36,7 +30,6 @@ static void	sigcont_handler(int signo)
 	execute_str(INVISIBLE);
 	execute_str(BEGIN_LINE);
 	get_print_info(lst, info);
-	print_list(lst, info);
 	(void)signo;
 }
 
@@ -52,17 +45,18 @@ static void	sigwinch_handler(int signo)
 	(void)signo;
 }
 
-void		sigtstp_inject()
+void		sigtstp_handler(int signo)
 {
+	(void)signo;
 	reset_terminal_settings();
+	signal(SIGTSTP, SIG_DFL);
 	ioctl(STDOUT, TIOCSTI, "\x1a");
 }
 
 /*
 ** Setting up signal functions.
 ** KILL and STOP are not handled, and WILL leave you with a messy terminal
-** Terminating (ie dangerous) signals reset the terminal, and then
-** handles the signal with SIG_DFL.
+** Terminating (aka dangerous) signals reset the terminal, and then exit.
 ** All non-terminating signals are left untouched, except WINCH and CONT
 ** INT signal does NOT exit the program.
 */
@@ -71,6 +65,7 @@ void		signal_setup(void)
 {
 	signal(SIGWINCH, sigwinch_handler);
 	signal(SIGCONT, sigcont_handler);
+	signal(SIGTSTP, sigtstp_handler);
 	signal(SIGINT, sig_handler);
 	signal(SIGHUP, sig_handler);
 	signal(SIGQUIT, sig_handler);
@@ -85,7 +80,6 @@ void		signal_setup(void)
 	signal(SIGPIPE, sig_handler);
 	signal(SIGALRM, sig_handler);
 	signal(SIGTERM, sig_handler);
-	signal(SIGTSTP, sig_handler);
 	signal(SIGTTIN, sig_handler);
 	signal(SIGTTOU, sig_handler);
 	signal(SIGXCPU, sig_handler);
