@@ -1,21 +1,38 @@
 #include "ft_select.h"
 
-t_arg_list *delete_node(t_arg_list *lst, t_print_info *info)
+static void	reindex_list(t_arg_list *lst)
+{
+	int i;
+	t_arg_list *tmp;
+
+	tmp = lst;
+	tmp->id = 1;
+	i = 2;
+	while ((tmp = tmp->next) && tmp != lst)
+	{
+		tmp->id = i;
+		i++;
+	}
+}
+
+t_arg_list	*delete_node(t_arg_list *lst, t_print_info *info)
 {
 	t_arg_list *tmp;
-	t_arg_list *res;
 
 	tmp = lst;
 	while (tmp->current == 0)
 		tmp = tmp->next;
+	tmp->next->current = 1;
+	if (tmp == lst)
+		lst = lst->next;
 	tmp->prev->next = tmp->next;
 	tmp->next->prev = tmp->prev;
-	tmp->current = 0;
-	tmp->next->current = 1;
-	res = tmp->next;
-	free(tmp->name);
-	free(tmp);
-	get_print_info(res, info);
-	print_list(res, info);
-	return (res);
+	free_node(tmp);
+//	free(tmp->name);
+//	free(tmp);
+	lst_addr(&lst);
+	reindex_list(lst);
+	get_print_info(lst, info);
+	print_list(lst, info);
+	return (lst);
 }

@@ -39,11 +39,11 @@ void				print_selected(t_arg_list *lst)
 		return ;
 	}
 	if (tmp->highlighted)
-		ft_printf("%s", tmp->name);
+		ft_printf("%s ", tmp->name);
 	while ((tmp = tmp->next) && (tmp != lst))
 	{
 		if (tmp->highlighted)
-			ft_printf("  %s", tmp->name);
+			ft_printf("%s ", tmp->name);
 	}
 }
 
