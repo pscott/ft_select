@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-int		move_vertically(t_arg_list *lst, t_print_info *info, char *direction)
+int			move_vertically(t_arg_list *lst, t_print_info *info, char *direction)
 {
 	t_arg_list *tmp;
 
@@ -25,12 +25,23 @@ int		move_vertically(t_arg_list *lst, t_print_info *info, char *direction)
 	return (1);
 }
 
-int		move_horizontally(t_arg_list *lst, t_print_info *info, char *direction)
+static 	int	move_left_border(t_arg_list *tmp, t_print_info *info)
+{
+	int	target;
+	int	elem;
+	int	res;
+
+	res = -tmp->id;
+	target = info->nb_lines == 1 ? 0 : tmp->id % info->nb_lines - 1;
+	elem = info->nb_elem % info->nb_lines;
+	res -= (target > elem) ? info->nb_lines + (elem - target) : elem - target;
+	return (res);
+}
+
+int			move_horizontally(t_arg_list *lst, t_print_info *info, char *direction)
 {
 	t_arg_list *tmp;
 	int			jmp;
-	int			target;
-	int			elem;
 
 	if (!lst)
 		return (0);
@@ -49,23 +60,14 @@ int		move_horizontally(t_arg_list *lst, t_print_info *info, char *direction)
 	else if (ft_strncmp(direction, "left", 5) == 0)
 	{
 		if (tmp->id - info->nb_lines < 1)
-		{
-			jmp = -tmp->id;
-			target = tmp->id % info->nb_lines - 1;
-			elem = info->nb_elem % info->nb_lines;
-			jmp -= (target > elem) ? info->nb_lines + (elem - target) : elem - target;
-		}
+			jmp = move_left_border(tmp, info);
 		else
 			jmp = -info->nb_lines;
 	}
 	else
 		return (0);
-//	ft_printf("JMP: %d\n", jmp);
-//	sleep(3);
 	tmp = jump_nodes(tmp, jmp);
 	tmp->current = 1;
 	print_list(lst, info);
-//	print_info(info);
-//	ft_printf(" HERE: %d\n", tmp->id);
 	return (1);
 }
