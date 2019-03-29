@@ -15,7 +15,15 @@ t_arg_list	*jump_nodes(t_arg_list *lst, int num)
 	return (lst);
 }
 
-static	void		print_node(t_arg_list *tmp, int width)
+static void		reposition_cursor(t_print_info *info)
+{
+	t_pos pos;
+
+	retrieve_pos(&pos); // error
+	move_cursor(0, pos.row - info->nb_lines); //error
+}
+
+static void		print_node(t_arg_list *tmp, int width)
 {
 	if (tmp->current)
 		execute_str(UNDERLINE);
@@ -74,5 +82,5 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		tmp = jump_nodes(tmp, jmp);
 		total_printed++;
 	}
-	execute_str(RESTORE_CURSOR);
+	reposition_cursor(info);
 }
