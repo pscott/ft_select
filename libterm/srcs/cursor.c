@@ -14,9 +14,9 @@ static void	parse_pos(char *pos_str, t_pos *curr_pos)
 {
 	char	*col_start;
 
-	curr_pos->row = atoi(pos_str + 2);
-	col_start = strchr(pos_str, ';'); // error
-	curr_pos->col = col_start ? atoi(col_start + 1) : 0;
+	curr_pos->row = ft_atoi(pos_str + 2);
+	col_start = ft_strchr(pos_str, ';'); // error
+	curr_pos->col = col_start ? ft_atoi(col_start + 1) : 0;
 }
 
 static void	get_pos(char *pos_str)

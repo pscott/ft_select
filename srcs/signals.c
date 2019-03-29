@@ -54,7 +54,8 @@ static void	sigwinch_handler(int signo)
 
 void		sigtstp_inject()
 {
-	ioctl(0, TIOCSTI, "\x1a");
+	reset_terminal_settings();
+	ioctl(STDOUT, TIOCSTI, "\x1a");
 }
 
 /*

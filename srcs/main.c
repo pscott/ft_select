@@ -23,24 +23,19 @@ static int		ft_select(char **av)
 	while ((ret = read(STDIN, buf, BUF_SIZE) > 0))
 	{
 		buf[BUF_SIZE] = 0;
-		if (ft_strncmp(buf, "a", 1) == 0)
-		{
-			if (ioctl(STDOUT, TIOCSTI, "\x1A") == -1)
-				ft_printf("aie");
-		}
-		else if (ft_strncmp(buf, SPACE, SPACE_LEN) == 0)
+		if (ft_strncmp(buf, SPACE, SPACE_LEN + 1) == 0)
 			highlight_node(lst);
-		else if (ft_strncmp(buf, "\r", 1) == 0)
+		else if (ft_strncmp(buf, "\r", 2) == 0)
 			break ;
-		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
+		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN + 1) == 0)
 			move_horizontally(lst, &info, "right");
-		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
+		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN + 1) == 0)
 			move_horizontally(lst, &info, "left");
-		else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0 || ft_strncmp(buf, RTAB, RTAB_LEN) == 0)
+		else if (ft_strncmp(buf, UPARROW, ARROW_LEN + 1) == 0 || ft_strncmp(buf, RTAB, RTAB_LEN + 1) == 0)
 			move_vertically(lst, "up");
-		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0 || ft_strncmp(buf, TAB, TAB_LEN) == 0)
+		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN + 1) == 0 || ft_strncmp(buf, TAB, TAB_LEN + 1) == 0)
 			move_vertically(lst, "down");
-		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0)
+		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN + 1) == 0)
 		{
 			if (info.nb_elem == 1)
 			{
@@ -50,13 +45,13 @@ static int		ft_select(char **av)
 			else
 				lst = delete_node(lst, &info);
 		}
-		else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN) == 0)
+		else if (ft_strncmp(buf, "\004", 2) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN + 1) == 0)
 		{
 			reset_lst(lst);
 			break;
 		}
-		else if (ft_strncmp(buf, "\x1a", 1))
-			ft_printf("HEYYYYY");
+		else
+			magic_print(buf);
 		print_list(lst, &info);
 		ft_memset(buf, 0, BUF_SIZE);
 	}
@@ -67,7 +62,7 @@ static int		ft_select(char **av)
 		free_list(lst);
 		return (0);
 	}
-	else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN) == 0)
+	else if (ft_strncmp(buf, "\004", 2) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN + 1) == 0)
 	{
 		free_list(lst);
 		return (0);
