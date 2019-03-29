@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 18:25:41 by pscott            #+#    #+#              #
-#    Updated: 2019/03/29 13:07:29 by pscott           ###   ########.fr        #
+#    Updated: 2019/03/29 13:32:13 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ NAME		:= ft_select
 
 SRCDIR		:= srcs
 
-SRC			:= main.c linked_list.c free.c signals.c printing.c decoration.c \
-	print_info.c
+SRC			:= main.c linked_list.c free.c signals.c printing.c arrows.c \
+	info_utils.c selector.c
 ERR			:= error_usage.c
 
 INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/

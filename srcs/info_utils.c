@@ -1,11 +1,5 @@
 #include "ft_select.h"
 
-void			print_info(t_print_info *info)
-{
-	ft_printf("ELEMS: %d, MAX_NAME: %d, NB_CHARS: %d, NB_LINES: %d, ELEM_PER_LINE: %d, SIZE: %d", info->nb_elem, info->max_name_size, info->nb_chars, info->nb_lines, info->elem_per_line, info->w.ws_col);
-	print_line();
-}
-
 static int			get_print_width(t_arg_list *lst, t_print_info *info)
 {
 	int			i;

@@ -25,6 +25,12 @@
 # define DOWNARROW "\x1b\x5b\x42"
 # define UPARROW "\x1b\x5b\x41"
 # define ARROW_LEN 3
+# define SPACE "\x20"
+# define SPACE_LEN 1
+# define TAB "\x09"
+# define TAB_LEN 1
+# define RTAB "\x1b\x5b\x5a"
+# define RTAB_LEN 3
 
 struct termios	g_saved_attr;
 

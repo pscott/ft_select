@@ -30,15 +30,17 @@ static int		ft_select(char **av)
 			if (ioctl(STDOUT, TIOCSTI, "\x1A") == -1)
 				ft_printf("aie");
 		}
+		else if (ft_strncmp(buf, SPACE, SPACE_LEN) == 0)
+			select_node(lst, &info);
 		else if (ft_strncmp(buf, "\r", 1) == 0)
 			break ;
 		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
 			move_horizontally(lst, &info, "right");
 		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
 			move_horizontally(lst, &info, "left");
-		else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0)
+		else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0 || ft_strncmp(buf, RTAB, RTAB_LEN) == 0)
 			move_vertically(lst, &info, "up");
-		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0)
+		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0 || ft_strncmp(buf, TAB, TAB_LEN) == 0)
 			move_vertically(lst, &info, "down");
 	}
 	if (ret == -1)

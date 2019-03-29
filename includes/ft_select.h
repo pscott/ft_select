@@ -47,4 +47,6 @@ int				get_print_info(t_arg_list *lst, t_print_info *info);
 int				move_vertically(t_arg_list *lst, t_print_info *info, char *direction);
 int				move_horizontally(t_arg_list *lst, t_print_info *info, char *direction);
 
+int				select_node(t_arg_list *lst, t_print_info *info);
+
 #endif

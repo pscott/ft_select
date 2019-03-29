@@ -49,11 +49,11 @@ void				print_selected(t_arg_list *lst, t_print_info *info)
 		return ;
 	}
 	if (tmp->highlighted)
-		print_node(tmp, print_w);
+		ft_printf("%s", tmp->name);
 	while ((tmp = tmp->next) && (tmp != lst))
 	{
 		if (tmp->highlighted)
-			print_node(tmp, print_w);
+			ft_printf("  %s", tmp->name);
 	}
 }
 
