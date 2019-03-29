@@ -23,14 +23,13 @@ static int		ft_select(char **av)
 	while ((ret = read(STDIN, buf, BUF_SIZE) > 0))
 	{
 		buf[BUF_SIZE] = 0;
-
 		if (ft_strncmp(buf, "a", 1) == 0)
 		{
 			if (ioctl(STDOUT, TIOCSTI, "\x1A") == -1)
 				ft_printf("aie");
 		}
 		else if (ft_strncmp(buf, SPACE, SPACE_LEN) == 0)
-			highlight_node(lst, &info);
+			highlight_node(lst);
 		else if (ft_strncmp(buf, "\r", 1) == 0)
 			break ;
 		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
@@ -38,9 +37,9 @@ static int		ft_select(char **av)
 		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
 			move_horizontally(lst, &info, "left");
 		else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0 || ft_strncmp(buf, RTAB, RTAB_LEN) == 0)
-			move_vertically(lst, &info, "up");
+			move_vertically(lst, "up");
 		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0 || ft_strncmp(buf, TAB, TAB_LEN) == 0)
-			move_vertically(lst, &info, "down");
+			move_vertically(lst, "down");
 		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0)
 		{
 			if (info.nb_elem == 1)
@@ -56,6 +55,9 @@ static int		ft_select(char **av)
 			reset_lst(lst);
 			break;
 		}
+		else if (ft_strncmp(buf, "\x1a", 1))
+			ft_printf("HEYYYYY");
+		print_list(lst, &info);
 		ft_memset(buf, 0, BUF_SIZE);
 	}
 	execute_str(CLEAR_BELOW);
@@ -80,6 +82,7 @@ static int		ft_select(char **av)
 
 int				main(int ac, char **av)
 {
+	signal_setup();
 	if (ac < 2)
 		return (err_usage());
 	if (setup_terminal_settings() == 0)
@@ -92,7 +95,6 @@ int				main(int ac, char **av)
 	{
 		execute_str(INVISIBLE);
 		av++;
-		signal_setup();
 		if (ft_select(av))
 			print_line();
 		if (reset_terminal_settings())

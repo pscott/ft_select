@@ -40,12 +40,13 @@ void			free_node(t_arg_list *lst);
 int				err_usage(void);
 
 void			signal_setup(void);
+void			sigtstp_inject(void);
 int				get_print_info(t_arg_list *lst, t_print_info *info);
 
-int				move_vertically(t_arg_list *lst, t_print_info *info, char *direction);
+int				move_vertically(t_arg_list *lst, char *direction);
 int				move_horizontally(t_arg_list *lst, t_print_info *info, char *direction);
 
-int				highlight_node(t_arg_list *lst, t_print_info *info);
+int				highlight_node(t_arg_list *lst);
 t_arg_list		*delete_node(t_arg_list *lst, t_print_info *info);
 void			reset_lst(t_arg_list *lst);
 

@@ -28,11 +28,8 @@ t_arg_list	*delete_node(t_arg_list *lst, t_print_info *info)
 	tmp->prev->next = tmp->next;
 	tmp->next->prev = tmp->prev;
 	free_node(tmp);
-//	free(tmp->name);
-//	free(tmp);
 	lst_addr(&lst);
 	reindex_list(lst);
 	get_print_info(lst, info);
-	print_list(lst, info);
 	return (lst);
 }

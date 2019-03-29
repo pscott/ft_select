@@ -9,7 +9,17 @@ static void	sig_handler(int signo)
 {
 	reset_terminal_settings();
 	signal(signo, SIG_DFL);
+	raise(signo);
 }
+
+/*static void sigtstp_handler(int signo)
+{
+	ft_printf("HEY");
+	print_line();
+	reset_terminal_settings();
+	signal(signo, SIG_DFL);
+	raise(signo);
+}*/
 
 static void	sigcont_handler(int signo)
 {
@@ -24,6 +34,7 @@ static void	sigcont_handler(int signo)
 		exit(1);
 	}
 	execute_str(INVISIBLE);
+	execute_str(BEGIN_LINE);
 	get_print_info(lst, info);
 	print_list(lst, info);
 	(void)signo;
@@ -39,6 +50,11 @@ static void	sigwinch_handler(int signo)
 	get_print_info(lst, info);
 	print_list(lst, info);
 	(void)signo;
+}
+
+void		sigtstp_inject()
+{
+	ioctl(0, TIOCSTI, "\x1a");
 }
 
 /*

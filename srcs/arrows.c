@@ -1,6 +1,6 @@
 #include "ft_select.h"
 
-int			move_vertically(t_arg_list *lst, t_print_info *info, char *direction)
+int			move_vertically(t_arg_list *lst, char *direction)
 {
 	t_arg_list *tmp;
 
@@ -21,7 +21,6 @@ int			move_vertically(t_arg_list *lst, t_print_info *info, char *direction)
 	}
 	else
 		return (0);
-	print_list(lst, info);
 	return (1);
 }
 
@@ -68,6 +67,5 @@ int			move_horizontally(t_arg_list *lst, t_print_info *info, char *direction)
 		return (0);
 	tmp = jump_nodes(tmp, jmp);
 	tmp->current = 1;
-	print_list(lst, info);
 	return (1);
 }
