@@ -3,3 +3,4 @@ test
 *.o
 *.a
 ft_select
+*.swp
