@@ -20,22 +20,22 @@ static int		ft_select(char **av)
 	lst->current = 1;
 	get_print_info(lst, &info);
 	print_list(lst, &info);
-	while ((ret = read(STDIN, buf, BUF_SIZE) > 0))
+	while ((ret = read(STDIN_FILENO, buf, BUF_SIZE) > 0))
 	{
 		buf[BUF_SIZE] = 0;
-		if (ft_strncmp(buf, SPACE, SPACE_LEN + 1) == 0)
+		if (ft_strncmp(buf, SPACE, SPACE_LEN) == 0)
 			highlight_node(lst);
-		else if (ft_strncmp(buf, "\r", 2) == 0)
+		else if (ft_strncmp(buf, "\r", 1) == 0)
 			break ;
-		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN + 1) == 0)
+		else if (ft_strncmp(buf, RIGHTARROW, ARROW_LEN) == 0)
 			move_horizontally(lst, &info, "right");
-		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN + 1) == 0)
+		else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
 			move_horizontally(lst, &info, "left");
-		else if (ft_strncmp(buf, UPARROW, ARROW_LEN + 1) == 0 || ft_strncmp(buf, RTAB, RTAB_LEN + 1) == 0)
+		else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0 || ft_strncmp(buf, RTAB, RTAB_LEN) == 0)
 			move_vertically(lst, "up");
-		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN + 1) == 0 || ft_strncmp(buf, TAB, TAB_LEN + 1) == 0)
+		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0 || ft_strncmp(buf, TAB, TAB_LEN) == 0)
 			move_vertically(lst, "down");
-		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN + 1) == 0)
+		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0)
 		{
 			if (info.nb_elem == 1)
 			{
@@ -45,7 +45,7 @@ static int		ft_select(char **av)
 			else
 				lst = delete_node(lst, &info);
 		}
-		else if (ft_strncmp(buf, "\004", 2) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN + 1) == 0)
+		else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN) == 0)
 		{
 			reset_lst(lst);
 			break;
@@ -62,7 +62,7 @@ static int		ft_select(char **av)
 		free_list(lst);
 		return (0);
 	}
-	else if (ft_strncmp(buf, "\004", 2) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN + 1) == 0)
+	else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN) == 0)
 	{
 		free_list(lst);
 		return (0);

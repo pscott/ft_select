@@ -26,7 +26,7 @@ static void		print_node(t_arg_list *tmp, int width)
 		execute_str(NO_HIGHLIGHT);
 	if (tmp->current)
 		execute_str(NO_UNDERLINE);
-	write(STDIN, "  ", 2);
+	write(STDIN_FILENO, "  ", 2);
 }
 
 void				print_selected(t_arg_list *lst)
@@ -56,17 +56,38 @@ static int			reposition_cursor(t_print_info *info)
 	return (1);
 }
 
+static int			enough_printing_room(t_print_info *info)
+{
+	t_pos	curr_pos;
+	int		size;
+
+	retrieve_pos(&curr_pos);
+	size = info->w.ws_col * (info->w.ws_row - curr_pos.row) - (info->w.ws_col - curr_pos.col);
+	if (size < info->nb_chars)
+		return (1);
+	else
+		return (0);
+}
+
 void				print_list(t_arg_list *lst, t_print_info *info)
 {
 	t_arg_list		*tmp;
 	int				total_printed;
 	int				jmp;
 
+	execute_str(CLEAR_BELOW);
 	if (!(tmp = lst))
 	{
 		term_putstr_endline("error: arg_list is empty", STDERR);
 		return ;
 	}
+/*	if (!enough_printing_room(info))
+	{
+		term_putstr_endline("error: not enough room to print", STDERR);
+		info->nb_lines = 2;
+		reposition_cursor(info);
+		return ;
+	}*/
 	total_printed = 0;
 	while (total_printed < info->nb_elem)
 	{

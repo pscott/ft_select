@@ -2,10 +2,10 @@
 
 int			reset_terminal_settings(void)
 {
-	if (isatty(0) == 0)
+	if (isatty(STDIN) == 0)
 		return (0);
 	execute_str(VISIBLE);
-	if ((tcsetattr(0, TCSANOW, &g_saved_attr) == -1))
+	if ((tcsetattr(STDIN, TCSANOW, &g_saved_attr) == -1))
 		return (err_resetattr());
 	return (1);
 }
@@ -20,7 +20,8 @@ int		set_non_canonical_mode(struct termios *tattr)
 	tattr->c_cflag |= CS8;
 	tattr->c_cc[VMIN] = 1;
 	tattr->c_cc[VTIME] = 0;
-	tcsetattr(STDIN, TCSAFLUSH, tattr);
+	if (tcsetattr(STDIN, TCSAFLUSH, tattr) == -1)
+		return (0);
 	return (1);
 }
 
@@ -33,7 +34,7 @@ int			setup_terminal_settings(void)
 
 	if ((termtype = getenv("TERM")) == NULL)
 		return (err_no_env());
-	if (isatty(0) == 0)
+	if (isatty(STDIN) == 0)
 		return (err_not_terminal());
 	if ((res = tgetent(term_buffer, termtype)) == 0)
 		return (err_noentry());

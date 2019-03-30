@@ -19,7 +19,13 @@ static void	sigcont_handler(int signo)
 {
 	t_print_info	*info;
 	t_arg_list		*lst;
+	pid_t			stdin_PGID;
 
+	stdin_PGID = tcgetpgrp(STDIN_FILENO);
+	if (tcsetpgrp(STDIN_FILENO, stdin_PGID) == -1)
+	{
+		exit(150);
+	}
 	info = info_addr(NULL);
 	lst = lst_addr(NULL);
 	if (setup_terminal_settings() == 0)
@@ -53,6 +59,12 @@ void		sigtstp_handler(int signo)
 	ioctl(STDOUT, TIOCSTI, "\x1a");
 }
 
+void		sigint_handler(int signo)
+{
+	(void)signo;
+	ft_printf("%d\n", signo);
+}
+
 /*
 ** Setting up signal functions.
 ** KILL and STOP are not handled, and WILL leave you with a messy terminal
@@ -63,10 +75,15 @@ void		sigtstp_handler(int signo)
 
 void		signal_setup(void)
 {
-	signal(SIGWINCH, sigwinch_handler);
+	struct sigaction sig_int;
+
+	sig_int.sa_handler = sigwinch_handler;
+//	sig_int.sa_flags = SA_RESTART;
+//	signal(SIGWINCH, sigwinch_handler);
+	sigaction(SIGWINCH, &sig_int, NULL);
 	signal(SIGCONT, sigcont_handler);
 	signal(SIGTSTP, sigtstp_handler);
-	signal(SIGINT, sig_handler);
+	sigaction(SIGINT, &sig_int, NULL);
 	signal(SIGHUP, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	signal(SIGILL, sig_handler);
