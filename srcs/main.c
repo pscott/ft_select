@@ -1,13 +1,13 @@
 #include "ft_select.h"
 
-static void		magic_print(char *buf)
+/*static void		magic_print(char *buf)
 {
 	while (*buf)
 	{
 		ft_printf("%d ", *buf);
 		buf++;
 	}
-}
+}*/
 
 static int		ft_select(char **av)
 {

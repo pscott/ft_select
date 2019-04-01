@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:40:22 by pscott            #+#    #+#             */
-/*   Updated: 2019/01/07 16:33:26 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/01 20:55:35 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		print_perc(t_arg *specs, char c)
 	return (1);
 }
 
-int		handle_perc(char **format, t_arg *specs, va_list *arg)
+int		handle_perc(char **format, t_arg *specs, va_list arg)
 {
 	increm_format(format, 1);
 	reset_specs(specs);
@@ -51,23 +51,23 @@ int		handle_perc(char **format, t_arg *specs, va_list *arg)
 	return (0);
 }
 
-int		parse_struct(t_arg *specs, va_list *arg)
+int		parse_struct(t_arg *specs, va_list arg)
 {
 	if (!specs->fill || (specs->precision && specs->type != 'c'
 				&& specs->type != 's'))
 		specs->fill = ' ';
 	if (specs->type == 'c')
-		format_char(specs, va_arg(*arg, int));
+		format_char(specs, va_arg(arg, int));
 	else if (specs->type == 'u')
-		format_unsigned(specs, va_arg(*arg, ULL));
+		format_unsigned(specs, va_arg(arg, ULL));
 	else if (specs->type == 'd' || specs->type == 'i')
-		format_int(specs, va_arg(*arg, LL));
+		format_int(specs, va_arg(arg, LL));
 	else if (specs->type == 's')
-		format_string(specs, va_arg(*arg, char*));
+		format_string(specs, va_arg(arg, char*));
 	else if (specs->type == 'o' || specs->type == 'x' || specs->type == 'X')
-		format_conv(specs, va_arg(*arg, LL));
+		format_conv(specs, va_arg(arg, LL));
 	else if (specs->type == 'p')
-		format_p(specs, va_arg(*arg, L));
+		format_p(specs, va_arg(arg, L));
 	else if (specs->type == 'f')
 		format_float(specs, arg);
 	return (1);

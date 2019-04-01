@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 19:06:52 by pscott            #+#    #+#             */
-/*   Updated: 2019/01/27 12:18:28 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/01 20:56:13 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,16 @@ typedef struct	s_arg
 	int			extra;
 }				t_arg;
 
+int            ft_vprintf(const char *format, va_list ap);
+int            ft_dprintf(int fd, const char *format, ...);
+int 		   ft_vdprintf(int fd, const char *format, va_list ap);
+
 char			*convert(ULL num, int base, char *rep);
 char			*convert_p(L num, int base, char *rep);
 int				ft_printf(const char *format, ...);
-int				parse_struct(t_arg *specs, va_list *arg);
+int				parse_struct(t_arg *specs, va_list arg);
 void			ft_itoa_spec(t_arg *specs, LL value);
-int				handle_perc(char **fornat, t_arg *specs, va_list *arg);
+int				handle_perc(char **fornat, t_arg *specs, va_list arg);
 int				print_perc(t_arg *specs, char c);
 void			ft_uitoa_spec(t_arg *specs, ULL value);
 void			ft_nitoa(t_arg *specs, int n);
@@ -84,7 +88,7 @@ int				get_hhlen(signed char value);
 int				get_ulen(unsigned int value);
 int				get_ullen(UL value);
 int				get_ulllen(ULL value);
-int				get_flags(t_arg *specs, char **format, va_list *arg);
+int				get_flags(t_arg *specs, char **format, va_list arg);
 int				is_type(char **format, t_arg *specs);
 int				is_spec_upper(char c);
 void			get_preci(char **format, t_arg *specs);
@@ -92,7 +96,7 @@ void			get_extra(char **format, t_arg *specs);
 void			format_int(t_arg *specs, LL value);
 void			format_unsigned(t_arg *specs, ULL value);
 void			format_p(t_arg *specs, L value);
-void			format_float(t_arg *specs, va_list *arg);
+void			format_float(t_arg *specs, va_list arg);
 int				unsigned_len(t_arg *spec, ULL value);
 void			format_char(t_arg *specs, char c);
 void			fill_char(int perc_len, t_arg *specs, char *value);
@@ -116,7 +120,7 @@ void			value_x(t_arg *specs, LL value);
 void			value_xx(t_arg *specs, LL value);
 void			value_o(t_arg *specs, LL value);
 void			value_u(t_arg *specs, ULL value);
-void			wildcard(t_arg *specs, va_list *arg, int modif);
+void			wildcard(t_arg *specs, va_list arg, int modif);
 LL				choose_value(t_arg *specs, LL value);
 int				set_i(t_arg *specs);
 #endif

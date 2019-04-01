@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/06 15:43:54 by pscott            #+#    #+#             */
-/*   Updated: 2019/01/07 16:26:01 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/01 20:57:31 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ static void	ld_to_string(t_arg *specs, long double f)
 	}
 }
 
-void		format_float(t_arg *specs, va_list *arg)
+void		format_float(t_arg *specs, va_list arg)
 {
 	if (specs->dbl)
-		ld_to_string(specs, va_arg(*arg, long double));
+		ld_to_string(specs, va_arg(arg, long double));
 	else
-		float_to_string(specs, va_arg(*arg, double));
+		float_to_string(specs, va_arg(arg, double));
 }

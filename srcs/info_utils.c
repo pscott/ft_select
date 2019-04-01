@@ -21,17 +21,26 @@ static void		fill_print_info(t_arg_list *lst, t_print_info *info)
 		return ;
 	while (info->elem_per_line * info->nb_lines < info->nb_elem)
 		info->nb_lines++;
+	if (info->nb_lines >= info->w.ws_row)
+		info->elem_per_line = 0;
 }
 
-int				get_print_info(t_arg_list *lst, t_print_info *info)
+/* 
+** get_print_info sets elem_per_line to 0 if i cannot print
+*/
+
+void			get_print_info(t_arg_list *lst, t_print_info *info)
 {
 	info_addr(&info);
-	if (ioctl(STDOUT, TIOCGWINSZ, &(info->w)) == -1)
-		term_putstr_endline("error: failed to use ioctl. Expect some undefined behaviors.", STDERR);
+	if (ioctl(STDIN, TIOCGWINSZ, &(info->w)) == -1)
+	{
+		term_putstr_endline("error: exiting.", STDERR);
+		reset_terminal_settings();
+		exit(1);
+	}
 	execute_str(CLEAR_BELOW);
 	info->nb_elem = 0;
 	info->max_name_size = 0;
 	info->nb_lines = 1;
 	fill_print_info(lst, info);
-	return (info->elem_per_line);
 }

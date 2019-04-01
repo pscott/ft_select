@@ -21,12 +21,12 @@ static void		print_node(t_arg_list *tmp, int width)
 		execute_str(UNDERLINE);
 	if (tmp->highlighted)
 		execute_str(HIGHLIGHT);
-	ft_printf("%-*s", width, tmp->name);
+	ft_dprintf(STDERR, "%-*s", width, tmp->name);
 	if (tmp->highlighted)
 		execute_str(NO_HIGHLIGHT);
 	if (tmp->current)
 		execute_str(NO_UNDERLINE);
-	write(STDIN_FILENO, "  ", 2);
+	write(STDERR, "  ", 2);
 }
 
 void				print_selected(t_arg_list *lst)
@@ -75,7 +75,7 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 	int				total_printed;
 	int				jmp;
 
-//	execute_str(CLEAR_BELOW);
+	execute_str(CLEAR_BELOW);
 	if (!(tmp = lst))
 	{
 		term_putstr_endline("error: arg_list is empty", STDERR);
@@ -89,7 +89,11 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		return ;
 	}*/
 	if (!(info->elem_per_line))
-		return ; //TODO: error nb elems per line*/
+	{
+		execute_str(LEFT_CORNER);
+		ft_printf("Terminal size too small");
+		return ;
+	}
 	total_printed = 0;
 	while (total_printed < info->nb_elem)
 	{

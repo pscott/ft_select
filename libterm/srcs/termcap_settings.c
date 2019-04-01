@@ -45,6 +45,6 @@ int			setup_terminal_settings(void)
 	if ((tcgetattr(STDIN, &tattr) == -1))
 		return (err_getattr());
 	if (set_non_canonical_mode(&tattr) == 0)
-		return (0);
+		return (0);//TODO: check return msg
 	return (1);
 }

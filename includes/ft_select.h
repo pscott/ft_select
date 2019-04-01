@@ -41,7 +41,7 @@ int				err_usage(void);
 
 void			signal_setup(void);
 void			sigtstp_handler(int signo);
-int				get_print_info(t_arg_list *lst, t_print_info *info);
+void			get_print_info(t_arg_list *lst, t_print_info *info);
 
 int				move_vertically(t_arg_list *lst, char *direction);
 int				move_horizontally(t_arg_list *lst, t_print_info *info, char *direction);

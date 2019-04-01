@@ -14,22 +14,50 @@ static void	parse_pos(char *pos_str, t_pos *curr_pos)
 {
 	char			*col_start;
 
-	
+
 	curr_pos->row = ft_atoi(pos_str + 2);
 	col_start = ft_strchr(pos_str + 3, ';'); //TODO: error
 	curr_pos->col = col_start ? ft_atoi(col_start + 1) : 0; //TODO: error
+}
+
+/*static void magic_print(char *buf)
+{
+	int i;
+
+	i = 0;
+	while (i < 50)
+	{
+		ft_dprintf(2, " %d ", buf[i]);
+		i++;
+	}
+}*/
+
+
+static int		ft_putchar_err(int c)
+{
+	if (write(STDERR, &c, 1) == -1)
+		return (0);
+	return (1);
 }
 
 static void	get_pos(char *pos_str)
 {
 	int	len;
 
-	while (ft_atoi(pos_str + 2) == 0)
+/*	tputs(GET_POS, 1, ft_putchar_err);
+	len = read(STDIN, pos_str, 50);
+	pos_str[len] = 0;*/
+	while (ft_atoi(pos_str + 2) == 0) // change?
 	{
-		tputs(GET_POS, 1, ft_putchar);
-		if ((len = read(STDIN, pos_str, 50)) < 0)
-			ft_printf("ERROR: READ ret: %d", len);//TODO: pls
-		pos_str[len] = 0;
+		tputs(GET_POS, 1, ft_putchar_err);
+		if (isatty(STDIN))
+		{
+			if ((len = read(STDIN, pos_str, 50)) < 1)
+				ft_printf("ERROR: READ ret: %d", len);//TODO: pls
+			pos_str[len] = 0;
+		}
+		else
+			break ;
 	}
 }
 
@@ -55,6 +83,6 @@ int		move_cursor(int col, int row)
 		return (err_no_str(MOVE_CURSOR));
 	if (!(gotostr = tgoto(gotostr, col, row)))
 		return (err_tgoto(MOVE_CURSOR));
-	tputs(gotostr, 1, ft_putchar); //tputs error
+	tputs(gotostr, 1, ft_putchar_err);
 	return (1);
 }

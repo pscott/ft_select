@@ -6,13 +6,13 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:11:03 by pscott            #+#    #+#             */
-/*   Updated: 2019/01/07 14:26:01 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/01 20:56:40 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	check_if_flags(t_arg *specs, char c, char **format, va_list *arg)
+void	check_if_flags(t_arg *specs, char c, char **format, va_list arg)
 {
 	if (c == '-')
 		specs->left++;
@@ -41,7 +41,7 @@ void	check_if_flags(t_arg *specs, char c, char **format, va_list *arg)
 	increm_format(format, 1);
 }
 
-int		get_flags(t_arg *specs, char **format, va_list *arg)
+int		get_flags(t_arg *specs, char **format, va_list arg)
 {
 	while (isprint_special(**format))
 	{
