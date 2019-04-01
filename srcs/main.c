@@ -45,7 +45,7 @@ static int		ft_select(char **av)
 			else
 				lst = delete_node(lst, &info);
 		}
-		else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN) == 0)
+		else if (ft_strncmp(buf, "\004", 1) == 0 || ft_strncmp(buf, ESCAPE, ESCAPE_LEN + 1) == 0)
 		{
 			reset_lst(lst);
 			break;

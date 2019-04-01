@@ -28,7 +28,7 @@ static void	get_pos(char *pos_str)
 	{
 		tputs(GET_POS, 1, ft_putchar);
 		if ((len = read(STDIN, pos_str, 50)) < 0)
-			ft_printf("ERROR");//TODO: pls
+			ft_printf("ERROR: READ ret: %d", len);//TODO: pls
 		pos_str[len] = 0;
 	}
 }

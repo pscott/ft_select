@@ -75,7 +75,7 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 	int				total_printed;
 	int				jmp;
 
-	execute_str(CLEAR_BELOW);
+//	execute_str(CLEAR_BELOW);
 	if (!(tmp = lst))
 	{
 		term_putstr_endline("error: arg_list is empty", STDERR);
@@ -88,6 +88,8 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		reposition_cursor(info);
 		return ;
 	}*/
+	if (!(info->elem_per_line))
+		return ; //TODO: error nb elems per line*/
 	total_printed = 0;
 	while (total_printed < info->nb_elem)
 	{

@@ -19,13 +19,7 @@ static void	sigcont_handler(int signo)
 {
 	t_print_info	*info;
 	t_arg_list		*lst;
-	pid_t			stdin_PGID;
 
-	stdin_PGID = tcgetpgrp(STDIN_FILENO);
-	if (tcsetpgrp(STDIN_FILENO, stdin_PGID) == -1)
-	{
-		exit(150);
-	}
 	info = info_addr(NULL);
 	lst = lst_addr(NULL);
 	if (setup_terminal_settings() == 0)
@@ -36,6 +30,8 @@ static void	sigcont_handler(int signo)
 	execute_str(INVISIBLE);
 	execute_str(BEGIN_LINE);
 	get_print_info(lst, info);
+	print_list(lst, info);
+	signal_setup();
 	(void)signo;
 }
 
@@ -44,11 +40,13 @@ static void	sigwinch_handler(int signo)
 	t_print_info	*info;
 	t_arg_list		*lst;
 
+	signal(SIGWINCH, SIG_DFL);
 	info = info_addr(NULL);
 	lst = lst_addr(NULL);
 	get_print_info(lst, info);
 	print_list(lst, info);
 	(void)signo;
+	signal(SIGWINCH, sigwinch_handler);
 }
 
 void		sigtstp_handler(int signo)
@@ -56,13 +54,7 @@ void		sigtstp_handler(int signo)
 	(void)signo;
 	reset_terminal_settings();
 	signal(SIGTSTP, SIG_DFL);
-	ioctl(STDOUT, TIOCSTI, "\x1a");
-}
-
-void		sigint_handler(int signo)
-{
-	(void)signo;
-	ft_printf("%d\n", signo);
+	ioctl(STDOUT_FILENO, TIOCSTI, "\x1a");
 }
 
 /*
@@ -75,15 +67,10 @@ void		sigint_handler(int signo)
 
 void		signal_setup(void)
 {
-	struct sigaction sig_int;
-
-	sig_int.sa_handler = sigwinch_handler;
-//	sig_int.sa_flags = SA_RESTART;
-//	signal(SIGWINCH, sigwinch_handler);
-	sigaction(SIGWINCH, &sig_int, NULL);
+	signal(SIGWINCH, sigwinch_handler);
 	signal(SIGCONT, sigcont_handler);
 	signal(SIGTSTP, sigtstp_handler);
-	sigaction(SIGINT, &sig_int, NULL);
+	signal(SIGINT, sig_handler);
 	signal(SIGHUP, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	signal(SIGILL, sig_handler);
@@ -97,8 +84,8 @@ void		signal_setup(void)
 	signal(SIGPIPE, sig_handler);
 	signal(SIGALRM, sig_handler);
 	signal(SIGTERM, sig_handler);
-	signal(SIGTTIN, sig_handler);
 	signal(SIGTTOU, sig_handler);
+	signal(SIGTTIN, sig_handler);
 	signal(SIGXCPU, sig_handler);
 	signal(SIGXFSZ, sig_handler);
 	signal(SIGVTALRM, sig_handler);
