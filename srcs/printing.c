@@ -56,19 +56,6 @@ static int			reposition_cursor(t_print_info *info)
 	return (1);
 }
 
-static int			enough_printing_room(t_print_info *info)
-{
-	t_pos	curr_pos;
-	int		size;
-
-	retrieve_pos(&curr_pos);
-	size = info->w.ws_col * (info->w.ws_row - curr_pos.row) - (info->w.ws_col - curr_pos.col);
-	if (size < info->nb_chars)
-		return (1);
-	else
-		return (0);
-}
-
 void				print_list(t_arg_list *lst, t_print_info *info)
 {
 	t_arg_list		*tmp;
@@ -92,7 +79,10 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 	{
 		execute_str(LEFT_CORNER);
 		execute_str(CLEAR_BELOW);
-		ft_dprintf(2, "Terminal size too small");
+		if (info->w.ws_col * info->w.ws_row < 23)
+			ft_dprintf(2, "LOL");
+		else
+			ft_dprintf(2, "Terminal size too small");
 		return ;
 	}
 	total_printed = 0;

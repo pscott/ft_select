@@ -6,12 +6,12 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 18:25:41 by pscott            #+#    #+#              #
-#    Updated: 2019/04/01 20:10:58 by pscott           ###   ########.fr        #
+#    Updated: 2019/04/01 22:49:45 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			:= gcc
-WFLAGS		:= -Wall -Wextra -g
+WFLAGS		:= -Wall -Wextra
 RM			:= rm -rf
 NAME		:= ft_select
 
