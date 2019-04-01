@@ -91,7 +91,8 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 	if (!(info->elem_per_line))
 	{
 		execute_str(LEFT_CORNER);
-		ft_printf("Terminal size too small");
+		execute_str(CLEAR_BELOW);
+		ft_dprintf(2, "Terminal size too small");
 		return ;
 	}
 	total_printed = 0;

@@ -54,7 +54,7 @@ void		sigtstp_handler(int signo)
 	(void)signo;
 	reset_terminal_settings();
 	signal(SIGTSTP, SIG_DFL);
-	ioctl(STDOUT_FILENO, TIOCSTI, "\x1a");
+	ioctl(STDERR_FILENO, TIOCSTI, "\x1a");
 }
 
 /*

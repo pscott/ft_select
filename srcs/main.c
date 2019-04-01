@@ -1,13 +1,13 @@
 #include "ft_select.h"
 
 /*static void		magic_print(char *buf)
-{
-	while (*buf)
-	{
-		ft_printf("%d ", *buf);
-		buf++;
-	}
-}*/
+  {
+  while (*buf)
+  {
+  ft_printf("%d ", *buf);
+  buf++;
+  }
+  }*/
 
 static int		ft_select(char **av)
 {
@@ -35,7 +35,7 @@ static int		ft_select(char **av)
 			move_vertically(lst, "up");
 		else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0 || ft_strncmp(buf, TAB, TAB_LEN) == 0)
 			move_vertically(lst, "down");
-		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0)
+		else if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0 || ft_strncmp(buf, DEL, DEL_LEN) == 0)
 		{
 			if (info.nb_elem == 1)
 			{

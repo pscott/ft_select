@@ -35,6 +35,8 @@
 # define ESCAPE_LEN 1
 # define BACKSPACE "\x7f"
 # define BACKSPACE_LEN 1
+# define DEL "\x1b\x5b\x33\x7e"
+# define DEL_LEN 4
 
 struct termios	g_saved_attr;
 
