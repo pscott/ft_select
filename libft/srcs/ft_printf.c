@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 11:34:09 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/01 20:53:43 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 12:17:45 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static	int		write_data(t_arg *specs, int total_len, int fd)
 	return (total_len);
 }
 
-int            ft_printf(const char *format, ...)
+int				ft_printf(const char *format, ...)
 {
-	va_list    ap;
-	int        ret;
+	va_list		ap;
+	int			ret;
 
 	va_start(ap, format);
 	ret = ft_vprintf(format, ap);
@@ -31,15 +31,15 @@ int            ft_printf(const char *format, ...)
 	return (ret);
 }
 
-int            ft_vprintf(const char *format, va_list ap)
+int				ft_vprintf(const char *format, va_list ap)
 {
 	return (ft_vdprintf(1, format, ap));
 }
 
-int            ft_dprintf(int fd, const char *format, ...)
+int				ft_dprintf(int fd, const char *format, ...)
 {
-	va_list    ap;
-	int        ret;
+	va_list		ap;
+	int			ret;
 
 	va_start(ap, format);
 	ret = ft_vdprintf(fd, format, ap);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   termcap_settings.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/02 12:18:39 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/02 12:38:44 by pscott           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libterm.h"
 
 int			reset_terminal_settings(void)
@@ -10,7 +22,7 @@ int			reset_terminal_settings(void)
 	return (1);
 }
 
-int		set_non_canonical_mode(struct termios *tattr)
+int			set_non_canonical_mode(struct termios *tattr)
 {
 	tattr->c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR
 			| ICRNL | IXON);
@@ -21,7 +33,7 @@ int		set_non_canonical_mode(struct termios *tattr)
 	tattr->c_cc[VMIN] = 1;
 	tattr->c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN, TCSAFLUSH, tattr) == -1)
-		return (0);
+		return (err_setattr());
 	return (1);
 }
 
@@ -45,6 +57,6 @@ int			setup_terminal_settings(void)
 	if ((tcgetattr(STDIN, &tattr) == -1))
 		return (err_getattr());
 	if (set_non_canonical_mode(&tattr) == 0)
-		return (0);//TODO: check return msg
+		return (0);
 	return (1);
 }

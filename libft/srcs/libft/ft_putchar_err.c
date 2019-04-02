@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_getenv.c                                     :+:      :+:    :+:   */
+/*   ft_putchar_err.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 12:18:51 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 12:18:51 by pscott           ###   ########.fr       */
+/*   Created: 2019/04/02 12:22:22 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/02 12:22:51 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		err_no_env(void)
+int		ft_putchar_err(int c)
 {
-	ft_putstr_fd("error: no TERM variable found in environment.\n", 2);
-	return (0);
+	if (write(STDERR_FILENO, &c, 1) == -1)
+		return (0);
+	return (1);
 }

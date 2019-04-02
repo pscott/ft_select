@@ -82,7 +82,7 @@ int				main(int ac, char **av)
 		return (err_usage());
 	if (setup_terminal_settings() == 0)
 	{
-		print_line();
+		print_line();//??
 		reset_terminal_settings();
 		return (1);
 	}

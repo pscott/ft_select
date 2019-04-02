@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 19:06:52 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/01 20:56:13 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 12:14:22 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ typedef struct	s_arg
 	int			extra;
 }				t_arg;
 
-int            ft_vprintf(const char *format, va_list ap);
-int            ft_dprintf(int fd, const char *format, ...);
-int 		   ft_vdprintf(int fd, const char *format, va_list ap);
+int				ft_vprintf(const char *format, va_list ap);
+int				ft_dprintf(int fd, const char *format, ...);
+int				ft_vdprintf(int fd, const char *format, va_list ap);
 
 char			*convert(ULL num, int base, char *rep);
 char			*convert_p(L num, int base, char *rep);

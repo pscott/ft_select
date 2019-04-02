@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cursor.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/02 12:18:30 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/02 12:37:27 by pscott           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libterm.h"
 
 static void	sanitize_pos_values(int *col, int *row)
@@ -14,46 +26,34 @@ static void	parse_pos(char *pos_str, t_pos *curr_pos)
 {
 	char			*col_start;
 
-
-	curr_pos->row = ft_atoi(pos_str + 2);
-	col_start = ft_strchr(pos_str + 3, ';'); //TODO: error
-	curr_pos->col = col_start ? ft_atoi(col_start + 1) : 0; //TODO: error
-}
-
-/*static void magic_print(char *buf)
-{
-	int i;
-
-	i = 0;
-	while (i < 50)
+	if (!pos_str)
 	{
-		ft_dprintf(2, " %d ", buf[i]);
-		i++;
+		curr_pos->row = 0;
+		curr_pos->col = 0;
 	}
-}*/
-
-
-static int		ft_putchar_err(int c)
-{
-	if (write(STDERR, &c, 1) == -1)
-		return (0);
-	return (1);
+	else
+	{
+		curr_pos->row = ft_atoi(pos_str + 2);
+		col_start = ft_strchr(pos_str + 3, ';');
+		curr_pos->col = col_start ? ft_atoi(col_start + 1) : 0;
+	}
 }
 
 static void	get_pos(char *pos_str)
 {
 	int	len;
 
-/*	tputs(GET_POS, 1, ft_putchar_err);
-	len = read(STDIN, pos_str, 50);
-	pos_str[len] = 0;*/
-	while (ft_atoi(pos_str + 2) == 0) // change?
+	while (ft_atoi(pos_str + 2) == 0)
 	{
 		tputs(GET_POS, 1, ft_putchar_err);
 		if (isatty(STDIN))
 		{
 			if ((len = read(STDIN, pos_str, 50)) < 1)
-				ft_printf("ERROR: READ ret: %d", len);//TODO: pls
+			{
+				term_putstr_endline("error: failed to read");
+				pos_str = NULL;
+				break ;
+			}
 			pos_str[len] = 0;
 		}
 		else
@@ -61,7 +61,7 @@ static void	get_pos(char *pos_str)
 	}
 }
 
-void	retrieve_pos(t_pos *curr_pos)
+void		retrieve_pos(t_pos *curr_pos)
 {
 	char	pos_str[50];
 
@@ -70,13 +70,13 @@ void	retrieve_pos(t_pos *curr_pos)
 	parse_pos(pos_str, curr_pos);
 }
 
-int		move_cursor(int col, int row)
+int			move_cursor(int col, int row)
 {
 	char	buf[50];
 	char	*gotostr;
 	char	*ap;
 
-	sanitize_pos_values(&col, &row);//error
+	sanitize_pos_values(&col, &row);
 	ft_bzero(buf, 50);
 	ap = buf;
 	if (!(gotostr = tgetstr(MOVE_CURSOR, &ap)))
