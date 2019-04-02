@@ -63,6 +63,7 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 	int				jmp;
 
 	execute_str(CLEAR_BELOW);
+	execute_str(BEGIN_LINE);
 	if (!(tmp = lst))
 	{
 		term_putstr_endline("error: arg_list is empty", STDERR);

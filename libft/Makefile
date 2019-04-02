@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 10:29:04 by pscott            #+#    #+#              #
-#    Updated: 2019/01/27 12:02:30 by pscott           ###   ########.fr        #
+#    Updated: 2019/04/02 17:48:48 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ GETLENDIR	:= srcs/get_len
 HELPERSDIR	:= srcs/helpers
 INCREMDIR	:= srcs/incrementers
 
-CFLAGS	:= -Wall -Werror -Wextra $(INCLDIR)
+CFLAGS	:= -Wall -Werror -Wextra $(INCLDIR) -g
 ARFLAGS	:=
 
 LIBS	:= ft_atoi.c  ft_bzero.c  ft_isalnum.c  ft_isalpha.c  ft_isascii.c \
@@ -38,7 +38,8 @@ LIBS	:= ft_atoi.c  ft_bzero.c  ft_isalnum.c  ft_isalpha.c  ft_isascii.c \
 	ft_strjoin.c  ft_strlcat.c  ft_strlen.c  ft_strmap.c  ft_strmapi.c \
 	ft_strncat.c  ft_strncmp.c  ft_strncpy.c  ft_strnequ.c  ft_strnew.c \
 	ft_strnstr.c  ft_strrchr.c  ft_strrev.c  ft_strsplit.c  ft_strstr.c \
-	ft_strsub.c  ft_strtrim.c  ft_tolower.c  ft_toupper.c ft_itoa.c ft_realloc.c
+	ft_strsub.c  ft_strtrim.c  ft_tolower.c  ft_toupper.c ft_itoa.c \
+	ft_realloc.c ft_putchar_err.c ft_free_null_tab.c
 
 
 ITOA	:= ft_nitoa.c  ft_litoa.c ft_llitoa.c ft_hitoa.c ft_hhitoa.c ft_uitoa.c

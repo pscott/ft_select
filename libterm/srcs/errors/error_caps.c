@@ -1,36 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cap.c                                      :+:      :+:    :+:   */
+/*   error_caps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 12:18:34 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 17:28:59 by pscott           ###   ########.fr       */
+/*   Created: 2019/04/02 14:48:35 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/02 16:32:34 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libterm.h"
 
-int		ft_putchar_err(int c)
+int		err_caps(void)
 {
-	if (write(STDERR, &c, 1) == -1)
-		return (0);
-	return (1);
-}
-
-int		execute_str(char *cap)
-{
-	char	buf[50];
-	char	*cap_str;
-	char	*ap;
-
-	ap = buf;
-	if (cap && (cap_str = tgetstr(cap, &ap)))
-	{
-		tputs(buf, 1, ft_putchar_err);
-		return (1);
-	}
-	else
-		return (err_no_str(cap));
+	ft_putstr_fd("error: missing terminal capabilities\n", 2);
+	return (0);
 }

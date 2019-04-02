@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cap.c                                      :+:      :+:    :+:   */
+/*   ft_free_null_tab.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 12:18:34 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 17:28:59 by pscott           ###   ########.fr       */
+/*   Created: 2019/04/02 17:46:04 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/02 17:55:46 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libterm.h"
+#include "libft.h"
 
-int		ft_putchar_err(int c)
+void		ft_free_null_tab(char **tab)
 {
-	if (write(STDERR, &c, 1) == -1)
-		return (0);
-	return (1);
-}
+	int i;
 
-int		execute_str(char *cap)
-{
-	char	buf[50];
-	char	*cap_str;
-	char	*ap;
-
-	ap = buf;
-	if (cap && (cap_str = tgetstr(cap, &ap)))
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
 	{
-		tputs(buf, 1, ft_putchar_err);
-		return (1);
+		free(tab[i]);
+		i++;
 	}
-	else
-		return (err_no_str(cap));
+	free(tab);
 }

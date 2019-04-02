@@ -1,14 +1,5 @@
 #include "ft_select.h"
 
-/*static void		magic_print(char *buf)
-  {
-  while (*buf)
-  {
-  ft_printf("%d ", *buf);
-  buf++;
-  }
-  }*/
-
 static int		ft_select(char **av)
 {
 	t_arg_list		*lst;
@@ -77,12 +68,16 @@ static int		ft_select(char **av)
 
 int				main(int ac, char **av)
 {
+	int res;
+
 	signal_setup();
 	if (ac < 2)
 		return (err_usage());
-	if (setup_terminal_settings() == 0)
+	if ((res = setup_terminal_settings()) == -1)
+		return (res);
+	else if (res == 0)
 	{
-		print_line();//??
+		print_line();
 		reset_terminal_settings();
 		return (1);
 	}

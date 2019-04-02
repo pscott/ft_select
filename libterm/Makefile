@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/26 10:29:04 by pscott            #+#    #+#              #
-#    Updated: 2019/04/01 21:46:50 by pscott           ###   ########.fr        #
+#    Updated: 2019/04/02 15:29:58 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBS	:= -L $(LIBDIR) -lft -ltermcap
 CFLAGS	:= -Wall -I $(INCLDIR) -I $(LIBDIR)/includes
 SRC		:= execute_cap.c termcap_settings.c print_line.c cursor.c
 ERR		:= error_attr.c error_tgetent.c error_getenv.c error_getstr.c \
-	error_isatty.c error_tgoto.c
+	error_isatty.c error_tgoto.c error_caps.c
 
 ERRS	:= $(addprefix $(ERRDIR)/, $(ERR))
 SRCS	:= $(addprefix $(SRCDIR)/, $(SRC))

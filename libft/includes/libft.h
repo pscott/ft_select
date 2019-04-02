@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 11:34:05 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 12:22:09 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 17:50:31 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void			ft_lstrmdup(t_list *lst);
 char			*ft_itoa(int n);
 char			*ft_realloc(void *data, size_t current_data_size,
 		size_t *current_malloc_size, size_t append_size);
+void			ft_free_null_tab(char **tabs);
 #endif
