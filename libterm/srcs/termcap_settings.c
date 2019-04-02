@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   termcap_settings.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/02 18:22:33 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/02 18:23:24 by pscott           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libterm.h"
 
 int			reset_terminal_settings(void)
@@ -32,13 +44,20 @@ static char	**create_cap_array(void)
 	if (!(res = (char**)malloc(sizeof(*res) * (NUM_CAPS + 1))))
 		return (NULL);
 	ft_bzero(res, NUM_CAPS + 1);
-	if (!(res[0] = ft_strdup(BEGIN_LINE)) || !(res[1] = ft_strdup(LEFT_CORNER))
-			|| !(res[2] = ft_strdup(MOVE_CURSOR)) || !(res[3] = ft_strdup(CLEAR))
-			|| !(res[4] = ft_strdup(SAVE_CURSOR)) || !(res[5] = ft_strdup(CLEAR_BELOW))
-			|| !(res[6] = ft_strdup(RESTORE_CURSOR)) || !(res[7] = ft_strdup(INVISIBLE))
-			|| !(res[8] = ft_strdup(VISIBLE)) || !(res[9] = ft_strdup(PRINT_LINE))
-			|| !(res[10] = ft_strdup(ERASE_ENDLINE)) || !(res[11] = ft_strdup(HIGHLIGHT))
-			|| !(res[12] = ft_strdup(NO_HIGHLIGHT)) || !(res[13] = ft_strdup(UNDERLINE))
+	if (!(res[0] = ft_strdup(BEGIN_LINE))
+			|| !(res[1] = ft_strdup(LEFT_CORNER))
+			|| !(res[2] = ft_strdup(MOVE_CURSOR))
+			|| !(res[3] = ft_strdup(CLEAR))
+			|| !(res[4] = ft_strdup(SAVE_CURSOR))
+			|| !(res[5] = ft_strdup(CLEAR_BELOW))
+			|| !(res[6] = ft_strdup(RESTORE_CURSOR))
+			|| !(res[7] = ft_strdup(INVISIBLE))
+			|| !(res[8] = ft_strdup(VISIBLE))
+			|| !(res[9] = ft_strdup(PRINT_LINE))
+			|| !(res[10] = ft_strdup(ERASE_ENDLINE))
+			|| !(res[11] = ft_strdup(HIGHLIGHT))
+			|| !(res[12] = ft_strdup(NO_HIGHLIGHT))
+			|| !(res[13] = ft_strdup(UNDERLINE))
 			|| !(res[14] = ft_strdup(UNDERLINE)))
 	{
 		ft_free_null_tab(res);

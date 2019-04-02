@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 12:18:17 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 16:22:49 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 18:22:15 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,9 @@ int				print_line(void);
 void			term_putstr_endline(char *str, int fd);
 
 /*
-** Errors 
+** Error functions
 */
 int				err_getattr(void);
-
 int				err_not_terminal(void);
 int				err_no_env(void);
 int				err_setattr(void);

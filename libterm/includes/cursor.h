@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 12:18:14 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 18:11:11 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 18:22:29 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@
 # define NO_UNDERLINE "ue"
 # define NUM_CAPS 15
 
-
 typedef struct	s_pos {
 	int	row;
 	int	col;
 }				t_pos;
-void	retrieve_pos(t_pos *curr_pos);
-int		move_cursor(int col, int row);
+void			retrieve_pos(t_pos *curr_pos);
+int				move_cursor(int col, int row);
 
 #endif
