@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 12:18:30 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 12:37:27 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 14:14:47 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	get_pos(char *pos_str)
 		{
 			if ((len = read(STDIN, pos_str, 50)) < 1)
 			{
-				term_putstr_endline("error: failed to read");
+				term_putstr_endline("error: failed to read", 2);
 				pos_str = NULL;
 				break ;
 			}

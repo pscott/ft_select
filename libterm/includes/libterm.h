@@ -6,37 +6,41 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 12:18:17 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 12:18:18 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 14:28:54 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_TERMCAP_H
-# define FT_TERMCAP_H
+#ifndef LIBTERM_H
+# define LIBTERM_H
 
 # include <term.h>
 # include <termios.h>
 # include "libft.h"
 # include "cursor.h"
 
-# define CLEAR "cl"
-# define CLEAR_BELOW "cd"
-# define PRINT_LINE "do"
-# define ERASE_ENDLINE "ce"
-# define HIGHLIGHT "so"
-# define NO_HIGHLIGHT "se"
-# define UNDERLINE "us"
-# define NO_UNDERLINE "ue"
-
+/*
+** FILE DESCRIPTORS
+*/
 
 # define STDIN 0
 # define STDOUT 1
 # define STDERR 2
 # define ESC "\x1b"
+
+/*
+** ARROWS ANSCII ESCAPE CODES
+*/
+
 # define LEFTARROW "\x1b\x5b\x44"
 # define RIGHTARROW "\x1b\x5b\x43"
 # define DOWNARROW "\x1b\x5b\x42"
 # define UPARROW "\x1b\x5b\x41"
 # define ARROW_LEN 3
+
+/*
+** SPACE, TAB, REVERSE TAB, ESCAPE, BACKSPACE, DELETE
+*/
+
 # define SPACE "\x20"
 # define SPACE_LEN 1
 # define TAB "\x09"
@@ -50,13 +54,35 @@
 # define DEL "\x1b\x5b\x33\x7e"
 # define DEL_LEN 4
 
+/*
+** Previous terminal settings are saved in a global, and restored on exit.
+*/
+
 struct termios	g_saved_attr;
+
+/*
+** Settings-related functions
+*/
 
 int				setup_terminal_settings(void);
 int				reset_terminal_settings(void);
+
+/*
+** Executes the corresponding termcap string
+*/
+
 int				execute_str(char *cap);
+
+/*
+** Function for printing line and outputing msgs with endline
+*/
+
 int				print_line(void);
 void			term_putstr_endline(char *str, int fd);
+
+/*
+** Error printing and exiting functions
+*/
 
 int				err_setattr(void);
 int				err_resetattr(void);
