@@ -26,7 +26,7 @@ static void		fill_print_info(t_arg_list *lst, t_print_info *info)
 }
 
 /* 
-** get_print_info sets elem_per_line to 0 if i cannot print
+** get_print_info sets elem_per_line to 0 if it cannot print
 */
 
 void			get_print_info(t_arg_list *lst, t_print_info *info)

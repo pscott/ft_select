@@ -68,28 +68,3 @@ void			reset_lst(t_arg_list *lst)
 	while ((tmp = tmp->next) && (tmp != lst))
 		tmp->highlighted = 0;
 }
-
-t_print_info	*info_addr(t_print_info **new)
-{
-	static t_print_info	*info = NULL;
-
-	if (new)
-		info = *new;
-	return (info);
-}
-
-/*
-** This function replaces a global variable.
-** Global are fobidden at 42 (except for g_saved_attr)
-** Call get_lst(NULL) to retrieve the current list address,
-** or call get_lst(&lst) to set the static variable to lst's address.
-*/
-
-t_arg_list			*lst_addr(t_arg_list **new)
-{
-	static t_arg_list *lst = NULL;
-
-	if (new)
-		lst = *new;
-	return (lst);
-}
