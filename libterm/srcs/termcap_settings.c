@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 18:22:33 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 18:23:24 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/02 18:25:10 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			reset_terminal_settings(void)
 	return (1);
 }
 
-int			set_non_canonical_mode(struct termios *tattr)
+static int	set_non_canonical_mode(struct termios *tattr)
 {
 	tattr->c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR
 			| ICRNL | IXON);
