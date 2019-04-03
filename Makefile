@@ -83,14 +83,14 @@ ask_libs: ask_libft ask_libterm
 
 ask_libft:
 	@$(MAKE) -qC libft ; if [ $$? != "0" ] ; then\
-		$(MAKE) -C libft;\
+		$(MAKE) -j -C libft;\
 		else\
 		echo "nothing to be done for $(LIBFT_A)";\
 		fi
 
 ask_libterm:
 	@$(MAKE) -qC libterm ; if [ $$? != "0" ] ; then\
-		$(MAKE) -C libterm;\
+		$(MAKE) -j -C libterm;\
 		else\
 		echo "nothing to be done for $(LIBTERM_A)";\
 		fi
@@ -120,7 +120,7 @@ $(OBJ_DIR)/%.o: %.c
 	@echo Compiling $@
 
 tag:
-	ctags -R .
+	@ctags -R .
 
 clean: 
 	$(MAKE) clean -C libft
