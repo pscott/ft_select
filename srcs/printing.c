@@ -1,5 +1,25 @@
 #include "ft_select.h"
 
+static void			print_current(t_arg_list *tmp, t_print_info *info,
+		char *color)
+{
+	if (tmp->current)
+	{
+		execute_str(UNDERLINE);
+		if (tmp->highlighted)
+		{
+			execute_str(HIGHLIGHT);
+			ft_dprintf(STDERR, "%s%-*s%s", BOLD, info->max_name_size,
+					tmp->name, RESET);
+			execute_str(NO_HIGHLIGHT);
+		}
+		else
+			ft_dprintf(STDERR, "%s%s%-*s%s", color, BOLD, info->max_name_size,
+					tmp->name, RESET);
+		execute_str(NO_UNDERLINE);
+	}
+}
+
 static void			print_node(t_arg_list *tmp, t_print_info *info)
 {
 	char		*color;
@@ -7,18 +27,7 @@ static void			print_node(t_arg_list *tmp, t_print_info *info)
 	if (!(color = get_color(tmp->file_type, info)))
 		color = "";
 	if (tmp->current)
-	{
-		execute_str(UNDERLINE);
-		if (tmp->highlighted)
-		{
-			execute_str(HIGHLIGHT);
-			ft_dprintf(STDERR, "%s%-*s%s", BOLD, info->max_name_size, tmp->name, RESET);
-			execute_str(NO_HIGHLIGHT);
-		}
-		else
-			ft_dprintf(STDERR, "%s%s%-*s%s", color, BOLD, info->max_name_size, tmp->name, RESET);
-		execute_str(NO_UNDERLINE);
-	}
+		print_current(tmp, info, color);
 	else
 	{
 		if (tmp->highlighted)
@@ -28,7 +37,8 @@ static void			print_node(t_arg_list *tmp, t_print_info *info)
 			execute_str(NO_HIGHLIGHT);
 		}
 		else
-			ft_dprintf(STDERR, "%s%-*s%s", color, info->max_name_size, tmp->name, RESET);
+			ft_dprintf(STDERR, "%s%-*s%s", color, info->max_name_size,
+					tmp->name, RESET);
 	}
 	if (*color)
 		free(color);

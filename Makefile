@@ -6,7 +6,7 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 18:25:41 by pscott            #+#    #+#              #
-#    Updated: 2019/04/03 16:59:10 by pscott           ###   ########.fr        #
+#    Updated: 2019/04/03 21:36:04 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCDIR		:= srcs
 
 SRC			:= main.c linked_list.c free.c signals.c printing.c arrows.c \
 	info_utils.c selector.c deletor.c signal_utils.c check_commands.c \
-	print_utils.c colors.c
+	print_utils.c colors.c filetype.c
 ERR			:= error_usage.c
 
 INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/
