@@ -52,6 +52,7 @@ static void	sigwinch_handler(int signo)
 void		sigtstp_handler(int signo)
 {
 	(void)signo;
+	execute_str(CLEAR_BELOW);
 	reset_terminal_settings();
 	signal(SIGTSTP, SIG_DFL);
 	ioctl(STDERR_FILENO, TIOCSTI, "\x1a");
