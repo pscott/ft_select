@@ -6,19 +6,20 @@
 #    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/26 18:25:41 by pscott            #+#    #+#              #
-#    Updated: 2019/04/03 13:53:08 by pscott           ###   ########.fr        #
+#    Updated: 2019/04/03 14:59:31 by pscott           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			:= gcc
-WFLAGS		:= -Wall -Wextra -g
+WFLAGS		:= -Wall -Wextra
 RM			:= rm -rf
 NAME		:= ft_select
 
 SRCDIR		:= srcs
 
 SRC			:= main.c linked_list.c free.c signals.c printing.c arrows.c \
-	info_utils.c selector.c deletor.c signal_utils.c check_commands.c
+	info_utils.c selector.c deletor.c signal_utils.c check_commands.c \
+	print_utils.c
 ERR			:= error_usage.c
 
 INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/

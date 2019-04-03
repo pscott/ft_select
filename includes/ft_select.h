@@ -33,6 +33,7 @@ t_print_info	*info_addr(t_print_info **info);
 
 
 void			print_info(t_print_info *info);
+int				reposition_cursor(t_print_info *info);
 t_arg_list		*jump_nodes(t_arg_list *lst, int num);
 void			free_list(t_arg_list *lst);
 void			free_node(t_arg_list *lst);

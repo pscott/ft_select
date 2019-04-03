@@ -1,21 +1,6 @@
 #include "ft_select.h"
 
-t_arg_list	*jump_nodes(t_arg_list *lst, int num)
-{
-	while (num > 0)
-	{
-		lst = lst->next;
-		num--;
-	}
-	while (num < 0)
-	{
-		lst = lst->prev;
-		num++;
-	}
-	return (lst);
-}
-
-static void		print_node(t_arg_list *tmp, int width)
+static void			print_node(t_arg_list *tmp, int width)
 {
 	if (tmp->current)
 		execute_str(UNDERLINE);
@@ -47,50 +32,47 @@ void				print_selected(t_arg_list *lst)
 	}
 }
 
-static int			reposition_cursor(t_print_info *info)
+static int			setup_print(t_arg_list *lst, t_print_info *info)
 {
-	t_pos pos;
-
-	retrieve_pos(&pos);
-	move_cursor(0, pos.row - info->nb_lines);
+	execute_str(CLEAR_BELOW);
+	execute_str(BEGIN_LINE);
+	if (!lst)
+	{
+		term_putstr_endline("error: arg_list is empty", STDERR);
+		return (0);
+	}
+	if (!(info->elem_per_line))
+	{
+		execute_str(LEFT_CORNER);
+		execute_str(CLEAR_BELOW);
+		if (info->w.ws_col * info->w.ws_row < 23)
+			ft_dprintf(STDERR, "RLY?");
+		else
+			ft_dprintf(STDERR, "Terminal size too small");
+		return (0);
+	}
 	return (1);
 }
 
 void				print_list(t_arg_list *lst, t_print_info *info)
 {
-	t_arg_list		*tmp;
-	int				total_printed;
-	int				jmp;
+	int		total_printed;
+	int		jmp;
 
-	execute_str(CLEAR_BELOW);
-	execute_str(BEGIN_LINE);
-	if (!(tmp = lst))
-	{
-		term_putstr_endline("error: arg_list is empty", STDERR);
+	if (setup_print(lst, info) == 0)
 		return ;
-	}
-	if (!(info->elem_per_line))
-{
-		execute_str(LEFT_CORNER);
-		execute_str(CLEAR_BELOW);
-		if (info->w.ws_col * info->w.ws_row < 23)
-			ft_dprintf(2, "LOL");
-		else
-			ft_dprintf(2, "Terminal size too small");
-		return ;
-	}
 	total_printed = 0;
 	while (total_printed < info->nb_elem)
 	{
-		print_node(tmp, info->max_name_size);
-		if (tmp->id + info->nb_lines > info->nb_elem)
+		print_node(lst, info->max_name_size);
+		if (lst->id + info->nb_lines > info->nb_elem)
 		{
 			print_line();
-			jmp = info->nb_elem - tmp->id + (tmp->id % info->nb_lines + 1);
+			jmp = info->nb_elem - lst->id + (lst->id % info->nb_lines + 1);
 		}
 		else
 			jmp = info->nb_lines;
-		tmp = jump_nodes(tmp, jmp);
+		lst = jump_nodes(lst, jmp);
 		total_printed++;
 	}
 	reposition_cursor(info);

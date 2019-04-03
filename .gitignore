@@ -4,3 +4,4 @@ test
 *.a
 ft_select
 *.swp
+*.dSYM
