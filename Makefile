@@ -18,7 +18,7 @@ NAME		:= ft_select
 SRCDIR		:= srcs
 
 SRC			:= main.c linked_list.c free.c signals.c printing.c arrows.c \
-	info_utils.c selector.c deletor.c signal_utils.c
+	info_utils.c selector.c deletor.c signal_utils.c check_commands.c
 ERR			:= error_usage.c
 
 INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/

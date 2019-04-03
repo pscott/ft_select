@@ -38,11 +38,13 @@
 # define ARROW_LEN 3
 
 /*
-** SPACE, TAB, REVERSE TAB, ESCAPE, BACKSPACE, DELETE
+** SPACE, TAB, REVERSE TAB, ESCAPE, BACKSPACE, DELETE, ENTER
 */
 
 # define SPACE "\x20"
 # define SPACE_LEN 1
+# define ENTER "\r"
+# define ENTER_LEN 1
 # define TAB "\x09"
 # define TAB_LEN 1
 # define RTAB "\x1b\x5b\x5a"

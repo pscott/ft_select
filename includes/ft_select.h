@@ -50,4 +50,11 @@ int				highlight_node(t_arg_list *lst);
 t_arg_list		*delete_node(t_arg_list *lst, t_print_info *info);
 void			reset_lst(t_arg_list *lst);
 
+
+int				check_for_movement(t_arg_list *lst, t_print_info *info, char *buf);
+int				check_for_highlight(t_arg_list *lst, char *buf);
+int				check_for_quit(t_arg_list *lst, char *buf);
+int				check_for_delete(t_arg_list *lst, t_print_info *info, char *buf);
+int				check_for_stop(char *buf);
+
 #endif
