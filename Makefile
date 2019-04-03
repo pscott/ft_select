@@ -1,77 +1,147 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: pscott <pscott@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/26 18:25:41 by pscott            #+#    #+#              #
-#    Updated: 2019/04/03 21:36:04 by pscott           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+################################################################################
+# Basics #######################################################################
+NAME	:=	ft_select
+OPT		:=	
+CC		:=	gcc
+CFLAGS	:=	-Wall -Wextra -Werror
 
-CC			:= gcc
-WFLAGS		:= -Wall -Wextra
-RM			:= rm -rf
-NAME		:= ft_select
+DEBUG_FLAG	:=	-g
+FSA_FLAGS	:=	$(DEBUG_FLAG) -fsanitize=address
+VAL_FLAGS	:=	--leak-check=full --track-origins=yes --show-leak-kinds=all \
+				--show-reachable=no
 
-SRCDIR		:= srcs
+# Includes #####################################################################
+INCL_DIR	:=	includes libft/includes libterm/includes
+INCL_CMD	:=	$(addprefix -I,$(INCL_DIR))
 
-SRC			:= main.c linked_list.c free.c signals.c printing.c arrows.c \
-	info_utils.c selector.c deletor.c signal_utils.c check_commands.c \
-	print_utils.c colors.c filetype.c
-ERR			:= error_usage.c
+INCL_FILES	:=	ft_select.h
 
-INCL		:= -I includes/ -I libft/includes/ -I libterm/includes/
+INCLS		:=	$(addprefix includes/,$(INCL_FILES))
 
-LIBS		:= -L libft -lft -L libterm -lterm -ltermcap
-ERRS		:= $(addprefix $(SRCDIR)/errors/, $(ERR))
-SRCS		:= $(addprefix $(SRCDIR)/, $(SRC)) $(ERRS)
+LIB_INCL	:=	-L libft -lft -L libterm -lterm -ltermcap
+LIBFT_A		:=	libft/libft.a
+LIBTERM_A	:=	libterm/libterm.a
 
-OBJS		:= $(SRCS:.c=.o)
-DEPS		:= includes/ft_select.h Makefile
+LIBS		:= $(LIBFT_A) $(LIBTERM_A)
 
-COMP		:= $(CC) $(WFLAGS) $(INCL) $(LIBS)
-ENV			:= env
-OPT			:= 123 4567 8901011 abc defgghh
+# Directories ##################################################################
+SRC_DIR	:=	srcs
+	#srcs subdirectories names
+	COLORS_DIR		:= colors
+	COMMANDS_DIR	:= commands
+	ERRORS_DIR		:= errors
+	PRINTS_DIR		:= prints
+	SIGNALS_DIR		:= signals
+	#list of all srcs subdirectories
+	SRC_SUBDIRS	:=	$(COLORS_DIR) $(COMMANDS_DIR) $(ERRORS_DIR) $(PRINTS_DIR) \
+					$(SIGNALS_DIR)
 
-all: $(NAME)
+#VPATH specifies a list of directories that 'make' should search
+VPATH	:=	$(SRC_DIR) $(addprefix $(SRC_DIR)/,$(SRC_SUBDIRS))
 
-libft:
-	@$(MAKE) -C libft -j
+# Srcs file names ##############################################################
+SRC_FILES	:=	free.c linked_list.c main.c
+	#srcs subfiles names
+	ERRORS_FILES	:=	error_usage.c
+	COLORS_FILES	:=	colors.c filetype.c
+	COMMANDS_FILES	:=	arrows.c check_commands.c deletor.c selector.c
+	PRINTS_FILES	:=	info_utils.c print_utils.c printing.c
+	SIGNALS_FILES	:=	signal_utils.c signals.c
 
-libterm:
-	@$(MAKE) -C libterm -j
+#list of all .c files
+C_FILES	:=	$(SRC_FILES) $(COLORS_FILES) $(COMMANDS_FILES) $(ERRORS_FILES) \
+			$(PRINTS_FILES) $(SIGNALS_FILES)
 
-d: all
-	@$(ENV) ./$(NAME) $(OPT)
 
-val: all
-	@$(COMP) -o $(NAME) $(SRCS) -g
-	valgrind --leak-check=full $(ENV) ./$(NAME) $(OPT)
+# Complete path of each .c files ###############################################
+SRC_PATH		:=	$(addprefix $(SRC_DIR)/,$(SRC_FILES))
+ERRORS_PATH		:=	$(addprefix $(ERRORS_DIR)/,$(ERRORS_FILES))
+COLORS_PATH		:=	$(addprefix $(COLORS_DIR)/,$(COLORS_FILES))
+PRINTS_PATH		:=	$(addprefix $(PRINTS_DIR)/,$(PRINTS_FILES))
+SIGNALS_PATH	:=	$(addprefix $(SIGNALS_DIR)/,$(SIGNALS_FILES))
+COMMANDS_PATH	:=	$(addprefix $(COMMANDS_DIR)/,$(COMMANDS_FILES))
 
-fsa:
-	@$(COMP) -o $(NAME) $(SRCS) -fsanitize=address -g3
-	@$(ENV) ./$(NAME) $(OPT)
+#list of all "path/*.c"
+SRCS	:=	$(addprefix $(SRC_DIR)/,$(ERRORS_PATH))		\
+			$(addprefix $(SRC_DIR)/,$(COLORS_PATH))		\
+			$(addprefix $(SRC_DIR)/,$(COMMANDS_PATH))	\
+			$(addprefix $(SRC_DIR)/,$(PRINTS_PATH))		\
+			$(addprefix $(SRC_DIR)/,$(SIGNALS_PATH))	\
+			$(SRC_PATH)	
 
-$(NAME): $(OBJS) libft libterm Makefile
-	$(COMP) -o $(NAME) $(SRCS)
+#Object ########################################################################
+OBJ_DIR		:=	objs
+OBJ_FILES	:=	$(C_FILES:.c=.o)
+OBJS		:=	$(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
 
-%.o: %.c $(DEPS)
-	$(CC) -o $@ -c $< $(WFLAGS) $(INCL)
+# Rules ########################################################################
+.PHONY: all fsa val rmh adh tag clean fclean re d norm test ask_libft ask_libterm
 
-clean:
-	@$(MAKE) clean -C libft
-	@$(MAKE) clean -C libterm
-	@$(RM) *dSYM*
-	@$(RM) $(OBJS)
+all: ask_libs $(NAME) tag Makefile
+
+ask_libs: ask_libft ask_libterm
+
+ask_libft:
+	@$(MAKE) -qC libft ; if [ $$? != "0" ] ; then\
+		$(MAKE) -C libft;\
+		else\
+		echo "nothing to be done for $(LIBFT_A)";\
+		fi
+
+ask_libterm:
+	@$(MAKE) -qC libterm ; if [ $$? != "0" ] ; then\
+		$(MAKE) -C libterm;\
+		else\
+		echo "nothing to be done for $(LIBTERM_A)";\
+		fi
+
+$(LIBS): ask_libs
+
+fsa: $(SRCS) $(LIBS)
+	$(CC) $(CFLAGS) $(FSA_FLAGS) $(INCL_CMD) $(LIB_INCL) $(SRCS) -o $(NAME)
+	$(OPT) ./$(NAME)
+
+val: $(SRCS) $(LIBS)
+	$(CC) $(DEBUG_FLAG) $(INCL_CMD) $(LIB_INCL) $^ -o $(NAME)
+	valgrind $(VAL_FLAGS) $(OPT) ./$(NAME)
+
+rmh:
+	./script/42header_c_rm.sh $(SRCS)
+
+adh: rmh
+	vim -ns script/42header_add.keys $(SRCS) $(INCLS)
+
+$(NAME): $(OBJS) $(LIBS)
+	$(CC) $(CFLAGS) $(INCL_CMD) $^ -o $@ $(LIB_INCL)
+
+$(OBJ_DIR)/%.o: %.c
+	@mkdir $(OBJ_DIR) 2> /dev/null || true
+	@$(CC) $(CFlAGS) $(INCL_CMD) -o $@ -c $<
+	@echo Compiling $@
+
+tag:
+	ctags -R .
+
+clean: 
+	$(MAKE) clean -C libft
+	$(MAKE) clean -C libterm
+	$(RM) -rf $(OBJ_DIR)
 
 fclean: clean
-	@$(MAKE) fclean -C libft
-	@$(MAKE) fclean -C libterm
-	@$(RM) $(NAME)
-	@$(RM) a.out
+	$(MAKE) fclean -C libft
+	$(MAKE) fclean -C libterm
+	$(RM) $(NAME)
+	$(RM) -r $(NAME).dSYM
 
 re: fclean all
 
-.PHONY: all clean fclean re d fsa val libterm libft
+d: all
+	$(OPT) ./$(NAME)
+
+norm: adh
+	norminette $(SRCS)
+	norminette $(INCLS)
+
+test:
+	@echo "-----------------------------------"
+	$(MAKE) -qC libft/ ; echo answer=$$?

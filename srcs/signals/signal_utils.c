@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,23 +12,28 @@
 
 #include "ft_select.h"
 
-void		free_node(t_arg_list *lst)
+/*
+** Those functions act as global variables.
+** Globals are fobidden at 42 (except for g_saved_attr)
+** Call get_lst(NULL) to retrieve the current list address,
+** or call get_lst(&lst) to set the static variable to lst's address.
+** Same idea for info_addr.
+*/
+
+t_arg_list			*lst_addr(t_arg_list **new)
 {
-	ft_memdel((void*)&lst->name);
-	ft_memdel((void*)&lst);
+	static t_arg_list *lst = NULL;
+
+	if (new)
+		lst = *new;
+	return (lst);
 }
 
-void		free_list(t_arg_list *lst)
+t_print_info		*info_addr(t_print_info **new)
 {
-	t_arg_list	*head;
-	t_arg_list	*tmp;
+	static t_print_info	*info = NULL;
 
-	head = lst;
-	while (lst && (lst->next != head))
-	{
-		tmp = lst;
-		lst = lst->next;
-		free_node(tmp);
-	}
-	free_node(lst);
+	if (new)
+		info = *new;
+	return (info);
 }

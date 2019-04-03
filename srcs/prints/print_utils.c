@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cap.c                                      :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 12:18:34 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/03 22:48:23 by pscott           ###   ########.fr       */
+/*   Created: 2019/04/03 22:38:08 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/03 23:05:07 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libterm.h"
+#include "ft_select.h"
 
-int		ft_putchar_err(int c)
+t_arg_list	*jump_nodes(t_arg_list *lst, int num)
 {
-	if (write(STDERR, &c, 1) == -1)
-		return (0);
-	return (1);
+	while (num > 0)
+	{
+		lst = lst->next;
+		num--;
+	}
+	while (num < 0)
+	{
+		lst = lst->prev;
+		num++;
+	}
+	return (lst);
 }
 
-int		execute_str(char *cap)
+int			reposition_cursor(t_print_info *info)
 {
-	char	buf[50];
-	char	*cap_str;
-	char	*ap;
+	t_pos pos;
 
-	ap = buf;
-	if (cap && (cap_str = tgetstr(cap, &ap)))
-	{
-		tputs(buf, 1, ft_putchar_err);
-		return (1);
-	}
-	else
-		return (err_no_str(cap));
+	retrieve_pos(&pos);
+	move_cursor(0, pos.row - info->nb_lines);
+	return (1);
 }
