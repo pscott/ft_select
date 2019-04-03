@@ -12,7 +12,7 @@ static void	sig_handler(int signo)
 	lst = lst_addr(NULL);
 	reset_terminal_settings();
 	free_list(lst);
-	exit (signo);
+	exit(signo);
 }
 
 static void	sigcont_handler(int signo)
