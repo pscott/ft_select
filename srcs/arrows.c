@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 12:39:41 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/03 13:38:10 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/03 14:18:20 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ int			move_horizontally(t_arg_list *lst, t_print_info *info,
 		lst = lst->next;
 	lst->current = 0;
 	jmp = 0;
-	if (ft_strncmp(direction, "right", 5) == 0)
+	if (ft_strncmp(direction, "right", 6) == 0)
 	{
 		if (lst->id + info->nb_lines > info->nb_elem)
 			jmp = info->nb_elem - lst->id + (lst->id % info->nb_lines + 1);
 		else
 			jmp = info->nb_lines;
 	}
-	else if (ft_strncmp(direction, "left", 4) == 0)
+	else if (ft_strncmp(direction, "left", 5) == 0)
 	{
 		if (lst->id - info->nb_lines < 1)
 			jmp = move_left_border(lst, info);

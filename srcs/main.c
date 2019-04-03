@@ -1,24 +1,36 @@
-#include "ft_select.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/03 13:48:56 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/03 14:18:00 by pscott           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "ft_select.h"
 
 static int		input_loop(t_arg_list *lst, t_print_info *info)
 {
 	char			buf[BUF_SIZE + 1];
 	int				ret;
 
+	ft_bzero(buf, BUF_SIZE + 1);
 	while ((ret = read(STDIN_FILENO, buf, BUF_SIZE) > 0))
 	{
 		buf[BUF_SIZE] = 0;
-		if (check_for_movement(lst, info, buf));
-		else if (check_for_highlight(lst, buf));
-		else if (check_for_delete(lst, info, buf));
-		else if (check_for_stop(buf));
-		else if (check_for_quit(lst, buf))
+		check_for_movement(lst, info, buf);
+		check_for_highlight(lst, buf);
+		check_for_delete(lst, info, buf);
+		check_for_stop(buf);
+		if (check_for_quit(lst, buf))
 		{
 			ret = 0;
 			break ;
 		}
-		else if (ft_strncmp(buf, "\r", 1) == 0)
+		if (ft_strncmp(buf, "\r", 2) == 0)
 			break ;
 		print_list(lst, info);
 		ft_memset(buf, 0, BUF_SIZE);
