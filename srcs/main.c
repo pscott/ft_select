@@ -6,13 +6,13 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 13:48:56 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/03 14:18:00 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/03 14:48:00 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-static int		input_loop(t_arg_list *lst, t_print_info *info)
+static int		input_loop(t_arg_list **lst, t_print_info *info)
 {
 	char			buf[BUF_SIZE + 1];
 	int				ret;
@@ -21,18 +21,17 @@ static int		input_loop(t_arg_list *lst, t_print_info *info)
 	while ((ret = read(STDIN_FILENO, buf, BUF_SIZE) > 0))
 	{
 		buf[BUF_SIZE] = 0;
-		check_for_movement(lst, info, buf);
-		check_for_highlight(lst, buf);
-		check_for_delete(lst, info, buf);
+		check_for_movement(*lst, info, buf);
+		check_for_highlight(*lst, buf);
 		check_for_stop(buf);
-		if (check_for_quit(lst, buf))
+		if (check_for_quit(*lst, buf) || check_for_delete(lst, info, buf) == -1)
 		{
 			ret = 0;
 			break ;
 		}
 		if (ft_strncmp(buf, "\r", 2) == 0)
 			break ;
-		print_list(lst, info);
+		print_list(*lst, info);
 		ft_memset(buf, 0, BUF_SIZE);
 	}
 	execute_str(CLEAR_BELOW);
@@ -50,7 +49,7 @@ static int		ft_select(char **av)
 	lst->current = 1;
 	get_print_info(lst, &info);
 	print_list(lst, &info);
-	if (input_loop(lst, &info) < 1)
+	if (input_loop(&lst, &info) < 1)
 	{
 		free_list(lst);
 		return (0);

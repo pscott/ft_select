@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 13:39:46 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/03 14:18:36 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/03 14:47:59 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		check_for_quit(t_arg_list *lst, char *buf)
 		return (0);
 }
 
-int		check_for_delete(t_arg_list *lst, t_print_info *info, char *buf)
+int		check_for_delete(t_arg_list **lst, t_print_info *info, char *buf)
 {
 	if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN + 1) == 0
 			|| ft_strncmp(buf, DEL, DEL_LEN + 1) == 0)
@@ -58,10 +58,10 @@ int		check_for_delete(t_arg_list *lst, t_print_info *info, char *buf)
 		if (info->nb_elem == 1)
 		{
 			execute_str(CLEAR_BELOW);
-			return (0);
+			return (-1);
 		}
 		else
-			lst = delete_node(lst, info);
+			*lst = delete_node(*lst, info);
 		return (1);
 	}
 	else

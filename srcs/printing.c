@@ -69,15 +69,8 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		term_putstr_endline("error: arg_list is empty", STDERR);
 		return ;
 	}
-/*	if (!enough_printing_room(info))
-	{
-		term_putstr_endline("error: not enough room to print", STDERR);
-		info->nb_lines = 2;
-		reposition_cursor(info);
-		return ;
-	}*/
 	if (!(info->elem_per_line))
-	{
+{
 		execute_str(LEFT_CORNER);
 		execute_str(CLEAR_BELOW);
 		if (info->w.ws_col * info->w.ws_row < 23)

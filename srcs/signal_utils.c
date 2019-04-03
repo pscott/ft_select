@@ -1,7 +1,7 @@
 #include "ft_select.h"
 
 /*
-** Those functions replace global variables.
+** Those functions act as global variables.
 ** Globals are fobidden at 42 (except for g_saved_attr)
 ** Call get_lst(NULL) to retrieve the current list address,
 ** or call get_lst(&lst) to set the static variable to lst's address.
