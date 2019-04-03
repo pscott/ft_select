@@ -10,6 +10,8 @@ static void	sig_handler(int signo)
 	t_arg_list *lst;
 
 	lst = lst_addr(NULL);
+	execute_str(CLEAR_BELOW);
+	print_line();
 	reset_terminal_settings();
 	free_list(lst);
 	exit(signo);

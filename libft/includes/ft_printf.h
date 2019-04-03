@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 19:06:52 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/02 12:14:22 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/03 19:36:16 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,45 @@
 # define BASE_16_LOW "0123456789abcdef"
 # define BASE_16_UP "0123456789ABCDEF"
 # define INIT_LEN 32
+
+/*
+** Defining ANSI colors escape codes
+*/
+
+# define CONTROL_SIZE 4
+# define COLOR_SIZE 5
+# define RESET "\x1b[0m"
+# define BOLD "\x1b[1m"
+
+/*
+** Foreground colors
+*/
+
+# define BLACK "\x1b[30m"
+# define RED "\x1b[31m"
+# define GREEN "\x1b[32m"
+# define YELLOW "\x1b[33m"
+# define BLUE "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN "\x1b[36m"
+# define WHITE "\x1b[37m"
+# define FG_DFL "\x1b[39m"
+
+/*
+** Background colors
+*/
+
+# define BG_BLACK "\x1b[40m"
+# define BG_RED "\x1b[41m"
+# define BG_GREEN "\x1b[42m"
+# define BG_YELLOW "\x1b[43m"
+# define BG_BLUE "\x1b[44m"
+# define BG_MAGENTA "\x1b[45m"
+# define BG_CYAN "\x1b[46m"
+# define BG_WHITE "\x1b[47m"
+# define BG_DFL "\x1b[49m"
+
+# define BOLD_OFF "\x1b[22m"
 
 typedef struct	s_arg
 {

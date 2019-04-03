@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 13:42:37 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/03 14:13:51 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/03 18:08:51 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static t_arg_list	*create_node(char *name, int id)
 		return (NULL);
 	if (!(res->name = ft_strdup(name)))
 		return (NULL);
-	res->len = ft_strlen(name);
+	res->name_len = ft_strlen(name);
 	res->current = 0;
 	res->highlighted = 0;
 	res->prev = 0;
 	res->id = id;
+	res->file_type = get_file_type(name);
 	res->next = res;
 	res->prev = res;
 	return (res);

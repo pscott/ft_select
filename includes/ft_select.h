@@ -8,21 +8,22 @@
 
 typedef struct	s_arg_list {
 	char				*name;
-	int					len;
+	int					name_len;
 	struct s_arg_list	*next;
 	struct s_arg_list	*prev;
 	char				current;
 	int					id;
 	char				highlighted;
+	char				file_type;
 }				t_arg_list;
 
 typedef struct	s_print_info {
 	int				nb_elem;
 	int				max_name_size;
-	int				nb_chars;
 	int				nb_lines;
 	int				elem_per_line;
 	struct winsize	w;
+	char			ls_colors[23];
 }				t_print_info;
 
 t_arg_list		*create_list(char **av);
@@ -58,5 +59,8 @@ int				check_for_quit(t_arg_list *lst, char *buf);
 int				check_for_delete(t_arg_list **lst, t_print_info *info,
 		char *buf);
 int				check_for_stop(char *buf);
+
+char			get_file_type(char *name);
+char			*get_color(char filetype, t_print_info *info);
 
 #endif

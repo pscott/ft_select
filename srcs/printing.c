@@ -1,16 +1,37 @@
 #include "ft_select.h"
 
-static void			print_node(t_arg_list *tmp, int width)
+static void			print_node(t_arg_list *tmp, t_print_info *info)
 {
+	char		*color;
+
+	if (!(color = get_color(tmp->file_type, info)))
+		color = "";
 	if (tmp->current)
+	{
 		execute_str(UNDERLINE);
-	if (tmp->highlighted)
-		execute_str(HIGHLIGHT);
-	ft_dprintf(STDERR, "%-*s", width, tmp->name);
-	if (tmp->highlighted)
-		execute_str(NO_HIGHLIGHT);
-	if (tmp->current)
+		if (tmp->highlighted)
+		{
+			execute_str(HIGHLIGHT);
+			ft_dprintf(STDERR, "%s%-*s%s", BOLD, info->max_name_size, tmp->name, RESET);
+			execute_str(NO_HIGHLIGHT);
+		}
+		else
+			ft_dprintf(STDERR, "%s%s%-*s%s", color, BOLD, info->max_name_size, tmp->name, RESET);
 		execute_str(NO_UNDERLINE);
+	}
+	else
+	{
+		if (tmp->highlighted)
+		{
+			execute_str(HIGHLIGHT);
+			ft_dprintf(STDERR, "%-*s", info->max_name_size, tmp->name);
+			execute_str(NO_HIGHLIGHT);
+		}
+		else
+			ft_dprintf(STDERR, "%s%-*s%s", color, info->max_name_size, tmp->name, RESET);
+	}
+	if (*color)
+		free(color);
 	write(STDERR, "  ", 2);
 }
 
@@ -49,6 +70,7 @@ static int			setup_print(t_arg_list *lst, t_print_info *info)
 			ft_dprintf(STDERR, "RLY?");
 		else
 			ft_dprintf(STDERR, "Terminal size too small");
+		execute_str(LEFT_CORNER);
 		return (0);
 	}
 	return (1);
@@ -64,7 +86,7 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 	total_printed = 0;
 	while (total_printed < info->nb_elem)
 	{
-		print_node(lst, info->max_name_size);
+		print_node(lst, info);
 		if (lst->id + info->nb_lines > info->nb_elem)
 		{
 			print_line();

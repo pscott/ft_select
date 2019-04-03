@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 13:41:27 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/03 13:41:28 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/03 18:29:28 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ static void		fill_print_info(t_arg_list *lst, t_print_info *info)
 	max = 0;
 	tmp = lst;
 	while (i++ < info->nb_elem && (tmp = tmp->next))
-		max = (tmp->len > max) ? tmp->len : max;
+		max = (tmp->name_len > max) ? tmp->name_len : max;
 	info->max_name_size = max;
-	info->nb_chars = info->nb_elem * (info->max_name_size + SPACING);
 	info->elem_per_line = info->w.ws_col / (info->max_name_size + SPACING);
 	if (!info->elem_per_line)
 		return ;
@@ -43,7 +42,10 @@ static void		fill_print_info(t_arg_list *lst, t_print_info *info)
 
 void			get_print_info(t_arg_list *lst, t_print_info *info)
 {
+	char *ls_colors;
+
 	info_addr(&info);
+	ft_bzero(info->ls_colors, 23);
 	if (ioctl(STDIN, TIOCGWINSZ, &(info->w)) == -1)
 	{
 		term_putstr_endline("error: exiting.", STDERR);
@@ -52,6 +54,8 @@ void			get_print_info(t_arg_list *lst, t_print_info *info)
 	}
 	execute_str(CLEAR_BELOW);
 	info->nb_elem = 0;
+	if ((ls_colors = getenv("LSCOLORS")))
+		ft_strncpy(info->ls_colors, ls_colors, 22);
 	info->max_name_size = 0;
 	info->nb_lines = 1;
 	fill_print_info(lst, info);
