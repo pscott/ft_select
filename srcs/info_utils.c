@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   info_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/03 13:41:27 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/03 13:41:28 by pscott           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_select.h"
 
 static void		fill_print_info(t_arg_list *lst, t_print_info *info)
 {
 	int			i;
 	int			max;
-	t_arg_list *tmp;
+	t_arg_list	*tmp;
 
 	if (!lst)
 		return ;
@@ -25,7 +37,7 @@ static void		fill_print_info(t_arg_list *lst, t_print_info *info)
 		info->elem_per_line = 0;
 }
 
-/* 
+/*
 ** get_print_info sets elem_per_line to 0 if it cannot print
 */
 
