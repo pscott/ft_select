@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_commands.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/03 13:39:46 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/03 13:39:54 by pscott           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_select.h"
 
 int		check_for_movement(t_arg_list *lst, t_print_info *info, char *buf)
@@ -6,9 +18,11 @@ int		check_for_movement(t_arg_list *lst, t_print_info *info, char *buf)
 		move_horizontally(lst, info, "right");
 	else if (ft_strncmp(buf, LEFTARROW, ARROW_LEN) == 0)
 		move_horizontally(lst, info, "left");
-	else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0 || ft_strncmp(buf, RTAB, RTAB_LEN) == 0)
+	else if (ft_strncmp(buf, UPARROW, ARROW_LEN) == 0
+			|| ft_strncmp(buf, RTAB, RTAB_LEN) == 0)
 		move_vertically(lst, "up");
-	else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0 || ft_strncmp(buf, TAB, TAB_LEN) == 0)
+	else if (ft_strncmp(buf, DOWNARROW, ARROW_LEN) == 0
+			|| ft_strncmp(buf, TAB, TAB_LEN) == 0)
 		move_vertically(lst, "down");
 	else
 		return (0);
@@ -38,7 +52,8 @@ int		check_for_quit(t_arg_list *lst, char *buf)
 
 int		check_for_delete(t_arg_list *lst, t_print_info *info, char *buf)
 {
-	if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0 || ft_strncmp(buf, DEL, DEL_LEN) == 0)
+	if (ft_strncmp(buf, BACKSPACE, BACKSPACE_LEN) == 0
+			|| ft_strncmp(buf, DEL, DEL_LEN) == 0)
 	{
 		if (info->nb_elem == 1)
 		{
