@@ -31,7 +31,6 @@ void			print_selected(t_arg_list *lst);
 t_arg_list		*lst_addr(t_arg_list **lst);
 t_print_info	*info_addr(t_print_info **info);
 
-
 void			print_info(t_print_info *info);
 int				reposition_cursor(t_print_info *info);
 t_arg_list		*jump_nodes(t_arg_list *lst, int num);
@@ -45,17 +44,19 @@ void			sigtstp_handler(int signo);
 void			get_print_info(t_arg_list *lst, t_print_info *info);
 
 int				move_vertically(t_arg_list *lst, char *direction);
-int				move_horizontally(t_arg_list *lst, t_print_info *info, char *direction);
+int				move_horizontally(t_arg_list *lst, t_print_info *info,
+		char *direction);
 
 int				highlight_node(t_arg_list *lst);
 t_arg_list		*delete_node(t_arg_list *lst, t_print_info *info);
 void			reset_lst(t_arg_list *lst);
 
-
-int				check_for_movement(t_arg_list *lst, t_print_info *info, char *buf);
+int				check_for_movement(t_arg_list *lst, t_print_info *info,
+		char *buf);
 int				check_for_highlight(t_arg_list *lst, char *buf);
 int				check_for_quit(t_arg_list *lst, char *buf);
-int				check_for_delete(t_arg_list **lst, t_print_info *info, char *buf);
+int				check_for_delete(t_arg_list **lst, t_print_info *info,
+		char *buf);
 int				check_for_stop(char *buf);
 
 #endif
