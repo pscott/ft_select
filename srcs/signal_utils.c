@@ -17,7 +17,7 @@ t_arg_list			*lst_addr(t_arg_list **new)
 	return (lst);
 }
 
-t_print_info	*info_addr(t_print_info **new)
+t_print_info		*info_addr(t_print_info **new)
 {
 	static t_print_info	*info = NULL;
 
