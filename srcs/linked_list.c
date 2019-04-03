@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   linked_list.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/03 13:42:37 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/03 13:42:40 by pscott           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_select.h"
 
 static t_arg_list	*create_node(char *name, int id)
@@ -42,7 +54,7 @@ static t_arg_list	*add_node(t_arg_list *new, t_arg_list **lst)
 
 t_arg_list			*create_list(char **av)
 {
-	t_arg_list *lst;
+	t_arg_list	*lst;
 	int			id;
 
 	id = 1;
@@ -59,12 +71,12 @@ t_arg_list			*create_list(char **av)
 	return (lst);
 }
 
-void			reset_lst(t_arg_list *lst)
+void				reset_lst(t_arg_list *lst)
 {
 	t_arg_list *tmp;
 
 	tmp = lst;
-	tmp->highlighted= 0;
+	tmp->highlighted = 0;
 	while ((tmp = tmp->next) && (tmp != lst))
 		tmp->highlighted = 0;
 }
