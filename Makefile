@@ -10,6 +10,17 @@ FSA_FLAGS	:=	$(DEBUG_FLAG) -fsanitize=address
 VAL_FLAGS	:=	--leak-check=full --track-origins=yes --show-leak-kinds=all \
 				--show-reachable=no
 
+# Libraries ####################################################################
+LIBFT_DIR		:=	libft
+LIBTERM_DIR		:=	libterm
+
+LIB_INCL		:=	-L $(LIBFT_DIR) -lft -L $(LIBTERM_DIR) -lterm -ltermcap
+
+LIBFT_A			:=	$(addprefix $(LIBFT_DIR)/,libft.a)
+LIBTERM_A		:=	$(addprefix $(LIBTERM_DIR)/,libterm.a)
+
+LIBS			:= $(LIBFT_A) $(LIBTERM_A)
+
 # Includes #####################################################################
 INCL_DIR	:=	includes libft/includes libterm/includes
 INCL_CMD	:=	$(addprefix -I,$(INCL_DIR))
@@ -17,12 +28,6 @@ INCL_CMD	:=	$(addprefix -I,$(INCL_DIR))
 INCL_FILES	:=	ft_select.h
 
 INCLS		:=	$(addprefix includes/,$(INCL_FILES))
-
-LIB_INCL	:=	-L libft -lft -L libterm -lterm -ltermcap
-LIBFT_A		:=	libft/libft.a
-LIBTERM_A	:=	libterm/libterm.a
-
-LIBS		:= $(LIBFT_A) $(LIBTERM_A)
 
 # Directories ##################################################################
 SRC_DIR	:=	srcs
@@ -75,7 +80,8 @@ OBJ_FILES	:=	$(C_FILES:.c=.o)
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
 
 # Rules ########################################################################
-.PHONY: all fsa val rmh adh tag clean fclean re d norm test ask_libft ask_libterm
+.PHONY: all fsa val rmh adh tag clean fclean re d norm test ask_libft \
+	ask_libterm ask_libs
 
 all: ask_libs $(NAME) tag Makefile
 
@@ -84,15 +90,13 @@ ask_libs: ask_libft ask_libterm
 ask_libft:
 	@$(MAKE) -qC libft ; if [ $$? != "0" ] ; then\
 		$(MAKE) -j -C libft;\
-		else\
-		echo "nothing to be done for $(LIBFT_A)";\
 		fi
 
 ask_libterm:
-	@$(MAKE) -qC libterm ; if [ $$? != "0" ] ; then\
+	@$(MAKE) -qC libterm child; if [ $$? != "0" ] ; then\
 		$(MAKE) -j -C libterm;\
 		else\
-		echo "nothing to be done for $(LIBTERM_A)";\
+			echo "au revoir";\
 		fi
 
 $(LIBS): ask_libs
@@ -106,12 +110,12 @@ val: $(SRCS) $(LIBS)
 	valgrind $(VAL_FLAGS) $(OPT) ./$(NAME)
 
 rmh:
-	./script/42header_c_rm.sh $(SRCS)
+	./script/42header_c_rm.sh $(SRCS) $(INCLS)
 
 adh: rmh
 	vim -ns script/42header_add.keys $(SRCS) $(INCLS)
 
-$(NAME): $(OBJS) $(LIBS)
+$(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(INCL_CMD) $^ -o $@ $(LIB_INCL)
 
 $(OBJ_DIR)/%.o: %.c
@@ -137,6 +141,7 @@ re: fclean all
 
 d: all
 	$(OPT) ./$(NAME)
+
 
 norm: adh
 	norminette $(SRCS)

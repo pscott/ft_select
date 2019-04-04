@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 22:38:08 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/03 22:38:08 by pscott           ###   ########.fr       */
+/*   Created: 2019/04/04 14:52:56 by pscott            #+#    #+#             */
+/*   Updated: 2019/04/04 14:52:56 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/ioctl.h>
 # define BUF_SIZE 7
 # define SPACING 2
+# define YO "a"
 
 typedef struct	s_arg_list {
 	char				*name;

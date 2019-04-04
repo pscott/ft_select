@@ -10,6 +10,8 @@ FSA_FLAGS	:=	$(DEBUG_FLAG) -fsanitize=address
 VAL_FLAGS	:=	--leak-check=full --track-origins=yes --show-leak-kinds=all \
 				--show-reachable=no
 
+SCRIPT_PATH	:= ../script
+
 # Libraries #####################################################################
 LIBFT_DIR	:= ../libft
 
@@ -62,20 +64,18 @@ OBJ_FILES	:=	$(C_FILES:.c=.o)
 OBJS		:=	$(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
 
 # Rules ########################################################################
-.PHONY: all fsa val rmh adh tag clean fclean re d norm test ask_libft
+.PHONY: all fsa val rmh adh tag clean fclean re d norm test ask_libft ask_libs
 
 all: ask_libs $(NAME) tag Makefile
 
 ask_libs: ask_libft
 
+child: $(NAME) tag Makefile
+
 ask_libft:
 	@$(MAKE) -qC $(LIBFT_DIR) ; if [ $$? != "0" ] ; then\
 		$(MAKE) -j -C $(LIBFT_DIR) ;\
-		else\
-		echo "nothing to be done for $(LIBFT_A)";\
 		fi
-
-$(LIBS): ask_libs
 
 fsa: $(SRCS) $(LIBS)
 	$(CC) $(CFLAGS) $(FSA_FLAGS) $(INCL_CMD) $(LIB_INCL) $(SRCS) -o $(NAME)
@@ -86,12 +86,12 @@ val: $(SRCS) $(LIBS)
 	valgrind $(VAL_FLAGS) $(OPT) ./$(NAME)
 
 rmh:
-	./script/42header_c_rm.sh $(SRCS)
+	$(SCRIPT_PATH)/42header_c_rm.sh $(SRCS) $(INCLS)
 
 adh: rmh
-	vim -ns script/42header_add.keys $(SRCS) $(INCLS)
+	vim -ns $(SCRIPT_PATH)/42header_add.keys $(SRCS) $(INCLS)
 
-$(NAME): $(OBJS) $(LIBS)
+$(NAME): $(OBJS) $(INCLS) $(LIBS)
 	ar rcs $(NAME) $(OBJS)
 	ranlib $(NAME)
 
@@ -120,7 +120,3 @@ d: all
 norm: adh
 	norminette $(SRCS)
 	norminette $(INCLS)
-
-test:
-	@echo "-----------------------------------"
-	$(MAKE) -qC $(LIBFT_DIR)/ ; echo answer=$$?
