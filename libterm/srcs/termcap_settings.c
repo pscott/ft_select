@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:54:40 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 18:16:03 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 18:59:12 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static char	**create_cap_array(void)
 
 	if (!(res = (char**)malloc(sizeof(*res) * (NUM_CAPS + 1))))
 		return (NULL);
-	ft_bzero(res, NUM_CAPS + 1);
 	res[NUM_CAPS] = NULL;
 	if (!(res[0] = ft_strdup(BEGIN_LINE))
 			|| !(res[1] = ft_strdup(LEFT_CORNER))

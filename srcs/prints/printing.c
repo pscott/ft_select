@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:52:56 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 18:23:33 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 19:00:03 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void			print_current(t_arg_list *tmp, t_print_info *info,
 			execute_str(NO_HIGHLIGHT);
 		}
 		else
-			ft_dprintf(g_dev_tty, "%s%s%-*s%s", color, BOLD, info->max_name_size,
-					tmp->name, RESET);
+			ft_dprintf(g_dev_tty, "%s%s%-*s%s", color, BOLD,
+					info->max_name_size, tmp->name, RESET);
 		execute_str(NO_UNDERLINE);
 	}
 }
