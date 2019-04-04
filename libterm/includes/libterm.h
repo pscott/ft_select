@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:54:40 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 14:54:40 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 18:21:37 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <term.h>
 # include <termios.h>
+# include <fcntl.h>
 # include "libft.h"
 # include "cursor.h"
 
@@ -61,6 +62,7 @@
 */
 
 struct termios	g_saved_attr;
+int				g_dev_tty;
 
 /*
 ** Settings-related functions
@@ -80,6 +82,7 @@ int				execute_str(char *cap);
 */
 
 int				print_line(void);
+int				ft_putchar_tty(int c);
 void			term_putstr_endline(char *str, int fd);
 
 /*

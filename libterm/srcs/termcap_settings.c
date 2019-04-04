@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:54:40 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 15:37:47 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 18:16:03 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static char	**create_cap_array(void)
 	if (!(res = (char**)malloc(sizeof(*res) * (NUM_CAPS + 1))))
 		return (NULL);
 	ft_bzero(res, NUM_CAPS + 1);
+	res[NUM_CAPS] = NULL;
 	if (!(res[0] = ft_strdup(BEGIN_LINE))
 			|| !(res[1] = ft_strdup(LEFT_CORNER))
 			|| !(res[2] = ft_strdup(MOVE_CURSOR))
@@ -113,5 +114,7 @@ int			setup_terminal_settings(void)
 		return (err_caps() - 1);
 	if (set_non_canonical_mode(&tattr) == 0)
 		return (0);
+	if ((g_dev_tty = open("/dev/tty", O_WRONLY)) < 1)
+		return (err_not_terminal() - 1);
 	return (1);
 }

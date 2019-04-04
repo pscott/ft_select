@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:52:56 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 15:13:56 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 18:23:33 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static void			print_current(t_arg_list *tmp, t_print_info *info,
 		if (tmp->highlighted)
 		{
 			execute_str(HIGHLIGHT);
-			ft_dprintf(STDERR, "%s%-*s%s", BOLD, info->max_name_size,
+			ft_dprintf(g_dev_tty, "%s%-*s%s", BOLD, info->max_name_size,
 					tmp->name, RESET);
 			execute_str(NO_HIGHLIGHT);
 		}
 		else
-			ft_dprintf(STDERR, "%s%s%-*s%s", color, BOLD, info->max_name_size,
+			ft_dprintf(g_dev_tty, "%s%s%-*s%s", color, BOLD, info->max_name_size,
 					tmp->name, RESET);
 		execute_str(NO_UNDERLINE);
 	}
@@ -45,16 +45,16 @@ static void			print_node(t_arg_list *tmp, t_print_info *info)
 		if (tmp->highlighted)
 		{
 			execute_str(HIGHLIGHT);
-			ft_dprintf(STDERR, "%-*s", info->max_name_size, tmp->name);
+			ft_dprintf(g_dev_tty, "%-*s", info->max_name_size, tmp->name);
 			execute_str(NO_HIGHLIGHT);
 		}
 		else
-			ft_dprintf(STDERR, "%s%-*s%s", color, info->max_name_size,
+			ft_dprintf(g_dev_tty, "%s%-*s%s", color, info->max_name_size,
 					tmp->name, RESET);
 	}
 	if (*color)
 		free(color);
-	write(STDERR, "  ", 2);
+	write(g_dev_tty, "  ", 2);
 }
 
 void				print_selected(t_arg_list *lst)
@@ -89,9 +89,9 @@ static int			setup_print(t_arg_list *lst, t_print_info *info)
 		execute_str(LEFT_CORNER);
 		execute_str(CLEAR_BELOW);
 		if (info->w.ws_col * info->w.ws_row < 23)
-			ft_dprintf(STDERR, "RLY?");
+			ft_dprintf(g_dev_tty, "RLY?");
 		else
-			ft_dprintf(STDERR, "Terminal size too small");
+			ft_dprintf(g_dev_tty, "Terminal size too small");
 		execute_str(LEFT_CORNER);
 		return (0);
 	}
