@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:54:40 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 14:54:40 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 15:37:47 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ int			setup_terminal_settings(void)
 	int				res;
 	struct termios	tattr;
 
+	if (isatty(STDIN) == 0)
+		return (err_not_terminal() - 1);
 	if ((tcgetattr(STDIN, &g_saved_attr) == -1))
 		return (err_getattr() - 1);
 	if ((termtype = getenv("TERM")) == NULL)
 		return (err_no_env() - 1);
-	if (isatty(STDIN) == 0)
-		return (err_not_terminal() - 1);
 	if ((res = tgetent(term_buffer, termtype)) == 0)
 		return (err_noentry() - 1);
 	else if (res == -1)
