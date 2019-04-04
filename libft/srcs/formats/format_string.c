@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:53:23 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 14:53:24 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 18:28:50 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		format_string(t_arg *specs, char *value)
 	if (specs->l == 1)
 	{
 		specs->origin = NULL;
-		write(1, "\n", 1);
+		ft_special_memset(specs, 0, 1);
 		return ;
 	}
 	if (specs->left && specs->plus)
