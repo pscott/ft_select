@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:52:56 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 14:52:56 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 18:55:50 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	sig_handler(int signo)
 
 	lst = lst_addr(NULL);
 	execute_str(CLEAR_BELOW);
-	print_line();
 	reset_terminal_settings();
 	free_list(lst);
+	ft_dprintf(STDERR, "Interrupted by signal: %d\n", signo);
 	exit(signo);
 }
 
@@ -69,7 +69,7 @@ void		sigtstp_handler(int signo)
 	execute_str(CLEAR_BELOW);
 	reset_terminal_settings();
 	signal(SIGTSTP, SIG_DFL);
-	ioctl(STDERR_FILENO, TIOCSTI, "\x1a");
+	ioctl(STDIN, TIOCSTI, "\x1a");
 }
 
 /*
