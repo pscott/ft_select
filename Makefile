@@ -10,6 +10,13 @@ FSA_FLAGS	:=	$(DEBUG_FLAG) -fsanitize=address
 VAL_FLAGS	:=	--leak-check=full --track-origins=yes --show-leak-kinds=all \
 				--show-reachable=no
 
+# Libraries ####################################################################
+LIB_INCL	:=	-L libft -lft -L libterm -lterm -ltermcap
+LIBFT_A		:=	libft/libft.a
+LIBTERM_A	:=	libterm/libterm.a
+
+LIBS		:= $(LIBFT_A) $(LIBTERM_A)
+
 # Includes #####################################################################
 INCL_DIR	:=	includes libft/includes libterm/includes
 INCL_CMD	:=	$(addprefix -I,$(INCL_DIR))
@@ -17,12 +24,6 @@ INCL_CMD	:=	$(addprefix -I,$(INCL_DIR))
 INCL_FILES	:=	ft_select.h
 
 INCLS		:=	$(addprefix includes/,$(INCL_FILES))
-
-LIB_INCL	:=	-L libft -lft -L libterm -lterm -ltermcap
-LIBFT_A		:=	libft/libft.a
-LIBTERM_A	:=	libterm/libterm.a
-
-LIBS		:= $(LIBFT_A) $(LIBTERM_A)
 
 # Directories ##################################################################
 SRC_DIR	:=	srcs
@@ -84,15 +85,11 @@ ask_libs: ask_libft ask_libterm
 ask_libft:
 	@$(MAKE) -qC libft ; if [ $$? != "0" ] ; then\
 		$(MAKE) -j -C libft;\
-		else\
-		echo "nothing to be done for $(LIBFT_A)";\
 		fi
 
 ask_libterm:
 	@$(MAKE) -qC libterm ; if [ $$? != "0" ] ; then\
 		$(MAKE) -j -C libterm;\
-		else\
-		echo "nothing to be done for $(LIBTERM_A)";\
 		fi
 
 $(LIBS): ask_libs
@@ -111,7 +108,7 @@ rmh:
 adh: rmh
 	vim -ns script/42header_add.keys $(SRCS) $(INCLS)
 
-$(NAME): $(OBJS) $(LIBS)
+$(NAME): $(OBJS) $(LIBS) $(INCLS)
 	$(CC) $(CFLAGS) $(INCL_CMD) $^ -o $@ $(LIB_INCL)
 
 $(OBJ_DIR)/%.o: %.c

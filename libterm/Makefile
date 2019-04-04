@@ -71,8 +71,6 @@ ask_libs: ask_libft
 ask_libft:
 	@$(MAKE) -qC $(LIBFT_DIR) ; if [ $$? != "0" ] ; then\
 		$(MAKE) -j -C $(LIBFT_DIR) ;\
-		else\
-		echo "nothing to be done for $(LIBFT_A)";\
 		fi
 
 $(LIBS): ask_libs
@@ -91,7 +89,7 @@ rmh:
 adh: rmh
 	vim -ns script/42header_add.keys $(SRCS) $(INCLS)
 
-$(NAME): $(OBJS) $(LIBS)
+$(NAME): $(OBJS) $(LIBS) $(INCLS)
 	ar rcs $(NAME) $(OBJS)
 	ranlib $(NAME)
 
