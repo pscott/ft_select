@@ -83,7 +83,7 @@ OBJS		:=	$(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
 .PHONY: all fsa val rmh adh tag clean fclean re d norm test ask_libft \
 	ask_libterm ask_libs
 
-all: ask_libs $(NAME) tag Makefile
+all: ask_libs $(NAME) tag Makefile ft_select
 
 ask_libs: ask_libft ask_libterm
 
