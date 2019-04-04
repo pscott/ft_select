@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:52:56 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 14:52:56 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/04 15:13:56 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ void				print_list(t_arg_list *lst, t_print_info *info)
 		print_node(lst, info);
 		if (lst->id + info->nb_lines > info->nb_elem)
 		{
-			print_line();
+			if (total_printed != info->nb_elem - 1)
+				print_line();
 			jmp = info->nb_elem - lst->id + (lst->id % info->nb_lines + 1);
 		}
 		else
