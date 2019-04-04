@@ -115,7 +115,7 @@ rmh:
 adh: rmh
 	vim -ns script/42header_add.keys $(SRCS) $(INCLS)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) libterm/libterm.a libft/libft.a
 	$(CC) $(CFLAGS) $(INCL_CMD) $^ -o $@ $(LIB_INCL)
 
 $(OBJ_DIR)/%.o: %.c
