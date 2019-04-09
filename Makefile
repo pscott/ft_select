@@ -95,8 +95,6 @@ ask_libft:
 ask_libterm:
 	@$(MAKE) -qC libterm child; if [ $$? != "0" ] ; then\
 		$(MAKE) -j -C libterm;\
-		else\
-			echo "au revoir";\
 		fi
 
 $(LIBS): ask_libs
@@ -115,7 +113,7 @@ rmh:
 adh: rmh
 	vim -ns script/42header_add.keys $(SRCS) $(INCLS)
 
-$(NAME): $(OBJS) libterm/libterm.a libft/libft.a
+$(NAME): $(OBJS) libft/libft.a libterm/libterm.a
 	$(CC) $(CFLAGS) $(INCL_CMD) $^ -o $@ $(LIB_INCL)
 
 $(OBJ_DIR)/%.o: %.c
