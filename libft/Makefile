@@ -115,7 +115,7 @@ OBJS		:=	$(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
 # Rules ########################################################################
 .PHONY: all fsa val rmh adh tag clean fclean re d norm test
 
-all: $(NAME) tag Makefile libft.a
+all: $(NAME) Makefile libft.a
 
 fsa: $(SRCS)
 	$(CC) $(CFLAGS) $(FSA_FLAGS) $(INCL_CMD) $(LIB_INCL) $(SRCS) -o $(NAME)
