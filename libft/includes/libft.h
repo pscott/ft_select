@@ -6,7 +6,7 @@
 /*   By: pscott <pscott@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:53:24 by pscott            #+#    #+#             */
-/*   Updated: 2019/04/04 14:53:26 by pscott           ###   ########.fr       */
+/*   Updated: 2019/04/11 13:50:13 by pscott           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ size_t			ft_lstlen(t_list **head);
 void			ft_lstappend(t_list **lst, t_list *new);
 void			ft_lstrmdup(t_list *lst);
 char			*ft_itoa(int n);
-char			*ft_realloc(void *data, size_t current_data_size,
+char			*ft_realloc(char *data, size_t current_data_size,
 		size_t *current_malloc_size, size_t append_size);
 void			ft_free_null_tab(char **tabs);
 #endif
